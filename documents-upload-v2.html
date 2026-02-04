@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - Source of Funds - EXANTE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F5F5F5;
+            color: #212121;
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 200px;
+            background: #FFFFFF;
+            border-right: 1px solid #E5E5E5;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 12px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #E5E5E5;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-logo-icon {
+            width: 24px;
+            height: 24px;
+            background: #2E7D32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+        }
+
+        .sidebar-logo-icon svg {
+            transform: rotate(-45deg);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #F5F5F5;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E5E5E5;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #333;
+        }
+
+        .page-content {
+            flex: 1;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* DOCUMENT UPLOAD CARD */
+        .upload-card {
+            background: #FFFFFF;
+            border-radius: 4px;
+            border: 1px solid #E5E5E5;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* STEPS TABS */
+        .steps-tabs {
+            display: flex;
+            border-bottom: 1px solid #E5E5E5;
+            background: #FAFAFA;
+        }
+
+        .step-tab {
+            padding: 14px 24px;
+            font-size: 14px;
+            color: #999;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.15s ease;
+        }
+
+        .step-tab:hover {
+            color: #666;
+        }
+
+        .step-tab.active {
+            color: #333;
+            border-bottom-color: #2E7D32;
+        }
+
+        .step-tab.completed {
+            color: #2E7D32;
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #E5E5E5;
+            color: #666;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-tab.active .step-number {
+            background: #2E7D32;
+            color: white;
+        }
+
+        .step-tab.completed .step-number {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        /* CARD CONTENT */
+        .card-content {
+            padding: 32px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .card-link {
+            margin-bottom: 24px;
+        }
+
+        .card-link a {
+            color: #2E7D32;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .card-link a:hover {
+            text-decoration: underline;
+        }
+
+        .link-bracket {
+            color: #999;
+        }
+
+        /* SOURCE OF FUNDS OPTIONS */
+        .sof-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .sof-option {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .sof-option:hover {
+            border-color: #2E7D32;
+            background: #FAFAFA;
+        }
+
+        .sof-option.selected {
+            border-color: #2E7D32;
+            background: #F1F8E9;
+        }
+
+        .sof-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #D0D0D0;
+            border-radius: 4px;
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+
+        .sof-option.selected .sof-checkbox {
+            background: #2E7D32;
+            border-color: #2E7D32;
+        }
+
+        .sof-checkbox svg {
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+
+        .sof-option.selected .sof-checkbox svg {
+            opacity: 1;
+        }
+
+        .sof-label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .sof-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px 0;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .sof-note svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* FILE DROP ZONE */
+        .drop-zone {
+            border: 2px dashed #D0D0D0;
+            border-radius: 8px;
+            padding: 48px 40px;
+            text-align: center;
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+            background: linear-gradient(180deg, #FAFAFA 0%, #F5F5F5 100%);
+            position: relative;
+        }
+
+        .drop-zone::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px dashed transparent;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #2E7D32;
+            background: linear-gradient(180deg, #F1F8E9 0%, #E8F5E9 100%);
+            transform: scale(1.01);
+        }
+
+        .drop-zone.drag-over::before {
+            border-color: #81C784;
+        }
+
+        .drop-zone:hover {
+            border-color: #2E7D32;
+            cursor: pointer;
+            background: linear-gradient(180deg, #FAFAFA 0%, #F0F0F0 100%);
+        }
+
+        .drop-zone-icon {
+            width: 56px;
+            height: 56px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.2s ease;
+        }
+
+        .drop-zone:hover .drop-zone-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .drop-zone.drag-over .drop-zone-icon {
+            background: #2E7D32;
+            transform: translateY(-4px) scale(1.1);
+        }
+
+        .drop-zone.drag-over .drop-zone-icon svg {
+            stroke: white;
+        }
+
+        .drop-zone-text {
+            color: #333;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .drop-zone-subtext {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .drop-zone-hint {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #AAA;
+            font-size: 11px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 12px;
+        }
+
+        .drop-zone-hint svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* UPLOADED FILES LIST */
+        .uploaded-files {
+            margin-bottom: 24px;
+        }
+
+        .uploaded-file {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #FAFAFA;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-icon {
+            width: 32px;
+            height: 32px;
+            background: #E3F2FD;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1976D2;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .file-name {
+            font-size: 13px;
+            color: #333;
+        }
+
+        .file-size {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .file-remove {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 18px;
+        }
+
+        .file-remove:hover {
+            color: #D32F2F;
+        }
+
+        /* PROGRESS INDICATOR */
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 4px;
+            background: #4CAF50;
+            border-radius: 2px;
+        }
+
+        /* SEND BUTTON */
+        .card-footer {
+            padding: 16px 32px;
+            border-top: 1px solid #E5E5E5;
+            background: #FAFAFA;
+        }
+
+        .send-btn {
+            padding: 12px 32px;
+            background: #9E9E9E;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: not-allowed;
+            transition: all 0.15s ease;
+        }
+
+        .send-btn.active {
+            background: #8BC34A;
+            cursor: pointer;
+        }
+
+        .send-btn.active:hover {
+            background: #7CB342;
+        }
+
+        .skip-btn {
+            padding: 12px 32px;
+            background: #1B5E20;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            margin-left: 12px;
+        }
+
+        .skip-btn:hover {
+            background: #145214;
+        }
+
+        /* HIDDEN FILE INPUT */
+        .file-input {
+            display: none;
+        }
+
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: fixed;
+            right: 24px;
+            bottom: 100px;
+            width: 4px;
+            height: 60px;
+            background: #E0E0E0;
+            border-radius: 2px;
+        }
+
+        .scroll-thumb {
+            width: 4px;
+            height: 20px;
+            background: #9E9E9E;
+            border-radius: 2px;
+        }
+
+        /* STEP CONTENT VISIBILITY */
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* DOCUMENT CATEGORIES */
+        .doc-category {
+            margin-bottom: 24px;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .doc-category-header {
+            background: #F5F5F5;
+            padding: 14px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 1px solid #E5E5E5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .doc-category-header .category-icon {
+            width: 24px;
+            height: 24px;
+            background: #2E7D32;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .doc-category-header .category-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .doc-category-content {
+            padding: 16px 20px;
+        }
+
+        .doc-type-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .doc-type-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .doc-type-option:hover {
+            border-color: #2E7D32;
+            background: #FAFAFA;
+        }
+
+        .doc-type-option.selected {
+            border-color: #2E7D32;
+            background: #F1F8E9;
+        }
+
+        .doc-type-radio {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #D0D0D0;
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+
+        .doc-type-option.selected .doc-type-radio {
+            border-color: #2E7D32;
+        }
+
+        .doc-type-option.selected .doc-type-radio::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #2E7D32;
+            border-radius: 50%;
+        }
+
+        .doc-type-label {
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* UPLOAD AREA FOR EACH CATEGORY */
+        .doc-upload-area {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E5E5;
+        }
+
+        .doc-upload-area.visible {
+            display: block;
+        }
+
+        .mini-drop-zone {
+            border: 2px dashed #D0D0D0;
+            border-radius: 6px;
+            padding: 24px 20px;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            background: #FAFAFA;
+        }
+
+        .mini-drop-zone:hover {
+            border-color: #2E7D32;
+            background: #F5F5F5;
+        }
+
+        .mini-drop-zone.drag-over {
+            border-color: #2E7D32;
+            background: #F1F8E9;
+        }
+
+        .mini-drop-zone-text {
+            color: #666;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .mini-drop-zone-text svg {
+            width: 20px;
+            height: 20px;
+            stroke: #2E7D32;
+        }
+
+        .category-uploaded-file {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #E8F5E9;
+            border: 1px solid #C8E6C9;
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+
+        .category-file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-file-icon {
+            width: 28px;
+            height: 28px;
+            background: #2E7D32;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .category-file-name {
+            font-size: 13px;
+            color: #333;
+        }
+
+        .category-file-size {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .category-file-remove {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 4px;
+            font-size: 16px;
+        }
+
+        .category-file-remove:hover {
+            color: #D32F2F;
+        }
+
+        .category-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #2E7D32;
+        }
+
+        .category-status svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .category-status.pending {
+            color: #F57C00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <a href="#" class="sidebar-logo">
+                <div class="sidebar-logo-icon">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 0L16 8L8 16L0 8L8 0Z" fill="white"/>
+                    </svg>
+                </div>
+                <span>EXANTE</span>
+            </a>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="breadcrumb">
+                    <a href="dashboard-prototype-integrated.html">Home</a>
+                    <span>›</span>
+                    <a href="#">Applications</a>
+                    <span>›</span>
+                    <span style="color: #333;">Documents Upload</span>
+                </div>
+            </div>
+
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                <div class="upload-card">
+                    <!-- STEPS TABS -->
+                    <div class="steps-tabs">
+                        <div class="step-tab active" data-step="1">
+                            <span class="step-number">1</span>
+                            Source of Funds
+                        </div>
+                        <div class="step-tab" data-step="2">
+                            <span class="step-number">2</span>
+                            Documents
+                        </div>
+                        <div class="step-tab" data-step="3">
+                            <span class="step-number">3</span>
+                            Confirmation
+                        </div>
+                    </div>
+
+                    <!-- STEP 1: SOURCE OF FUNDS -->
+                    <div class="card-content step-content active" id="step1">
+                        <p class="card-title">
+                            Please indicate the source of funds for trading in financial instruments.
+                        </p>
+
+                        <div class="sof-options">
+                            <div class="sof-option" data-value="employment">
+                                <div class="sof-checkbox">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="sof-label">Income from employment / business activity</span>
+                            </div>
+
+                            <div class="sof-option" data-value="dividends">
+                                <div class="sof-checkbox">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="sof-label">Income from dividends / interests</span>
+                            </div>
+
+                            <div class="sof-option" data-value="realestate">
+                                <div class="sof-checkbox">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="sof-label">Income from real estate / rent</span>
+                            </div>
+
+                            <div class="sof-option" data-value="donation">
+                                <div class="sof-checkbox">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="sof-label">Donation / inheritance / divorce settlement</span>
+                            </div>
+
+                            <div class="sof-option" data-value="sale">
+                                <div class="sof-checkbox">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="sof-label">Income from sale of assets</span>
+                            </div>
+
+                            <div class="sof-option" data-value="loan">
+                                <div class="sof-checkbox">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="sof-label">Loan from financial institution / borrowings</span>
+                            </div>
+
+                            <div class="sof-option" data-value="other">
+                                <div class="sof-checkbox">
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                                        <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <span class="sof-label">Other source of income</span>
+                            </div>
+                        </div>
+
+                        <div class="sof-note">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>We reserve the right to request documents confirming your source of wealth for any transaction with us.</span>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: DOCUMENTS -->
+                    <div class="card-content step-content" id="step2">
+                        <p class="card-title">
+                            Please select a document type and upload the corresponding file for each source of funds you selected.
+                        </p>
+
+                        <div id="documentCategories"></div>
+
+                        <input type="file" id="fileInput" class="file-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                    </div>
+
+                    <!-- STEP 3: CONFIRMATION -->
+                    <div class="card-content step-content" id="step3">
+                        <p class="card-title">
+                            Thank you! Your information has been submitted successfully.
+                        </p>
+
+                        <div id="summaryContent" style="background: #FAFAFA; padding: 20px; border-radius: 4px; border: 1px solid #E5E5E5;">
+                            <p style="font-weight: 600; margin-bottom: 12px; color: #333;">Summary:</p>
+                            <div id="selectedSources" style="margin-bottom: 16px;"></div>
+                            <div id="uploadedFilesSummary"></div>
+                        </div>
+                    </div>
+
+                    <!-- CARD FOOTER -->
+                    <div class="card-footer">
+                        <button class="send-btn" id="sendBtn">Send</button>
+                        <button class="skip-btn" id="skipBtn" style="display: none;">Skip</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCROLL INDICATOR -->
+        <div class="scroll-indicator">
+            <div class="scroll-thumb"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedSources = [];
+        let categoryData = {}; // Stores { categoryId: { selectedDocType: '', file: null } }
+        let currentUploadCategory = null;
+
+        const stepTabs = document.querySelectorAll('.step-tab');
+        const stepContents = document.querySelectorAll('.step-content');
+        const sendBtn = document.getElementById('sendBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        const sofOptions = document.querySelectorAll('.sof-option');
+        const fileInput = document.getElementById('fileInput');
+        const documentCategories = document.getElementById('documentCategories');
+
+        // Document types mapping
+        const documentTypesMap = {
+            'employment': {
+                label: 'Income from employment / business activity',
+                docTypes: [
+                    'Income Tax Return (tax authority confirmed)',
+                    'Payslip (issued within the last 12 months)',
+                    'Employer salary confirmation letter',
+                    'Bank statement showing salary payments',
+                    'Other'
+                ]
+            },
+            'dividends': {
+                label: 'Income from dividends / interests',
+                docTypes: [
+                    'Dividend confirmation (audited financial statement or board resolution)',
+                    'Bank statement showing dividend transfer',
+                    'Proof of company ownership',
+                    'Other'
+                ]
+            },
+            'realestate': {
+                label: 'Income from real estate / rent',
+                docTypes: [
+                    'Rental agreement or property ownership document',
+                    'Bank statement showing rental income',
+                    'Other'
+                ]
+            },
+            'donation': {
+                label: 'Donation / inheritance / divorce settlement',
+                docTypes: [
+                    'Inheritance certificate (notarized)',
+                    'Gift/donation agreement',
+                    'Divorce settlement document (court/notary)',
+                    'Proof of relationship (for gifts/donations)',
+                    'Bank statement showing received funds',
+                    'Other'
+                ]
+            },
+            'sale': {
+                label: 'Income from sale of assets',
+                docTypes: [
+                    'Sale contract',
+                    'Proof of ownership transfer',
+                    'Bank statement showing received funds',
+                    'Other'
+                ]
+            },
+            'loan': {
+                label: 'Loan from financial institution / borrowings',
+                docTypes: [
+                    'Loan agreement',
+                    'Bank statement showing loan disbursement',
+                    'Other'
+                ]
+            },
+            'other': {
+                label: 'Other source of income',
+                docTypes: [
+                    'Investment/trading profits statement',
+                    'Company sale agreement',
+                    'Pension income statement',
+                    'Insurance policy maturity document',
+                    'Lottery/gambling winnings confirmation',
+                    'Other supporting document'
+                ]
+            }
+        };
+
+        // Source of Funds selection
+        sofOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                option.classList.toggle('selected');
+                const value = option.dataset.value;
+                if (option.classList.contains('selected')) {
+                    selectedSources.push(value);
+                } else {
+                    selectedSources = selectedSources.filter(s => s !== value);
+                    delete categoryData[value];
+                }
+                updateSendButton();
+            });
+        });
+
+        // Render document categories for Step 2
+        function renderDocumentCategories() {
+            documentCategories.innerHTML = '';
+
+            selectedSources.forEach(sourceId => {
+                const source = documentTypesMap[sourceId];
+                if (!source) return;
+
+                // Initialize category data if not exists
+                if (!categoryData[sourceId]) {
+                    categoryData[sourceId] = { selectedDocType: '', file: null };
+                }
+
+                const categoryHtml = `
+                    <div class="doc-category" data-category="${sourceId}">
+                        <div class="doc-category-header">
+                            <div class="category-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                </svg>
+                            </div>
+                            ${source.label}
+                        </div>
+                        <div class="doc-category-content">
+                            <div class="doc-type-options">
+                                ${source.docTypes.map((docType, index) => `
+                                    <div class="doc-type-option ${categoryData[sourceId].selectedDocType === docType ? 'selected' : ''}"
+                                         data-category="${sourceId}"
+                                         data-doctype="${docType}">
+                                        <div class="doc-type-radio"></div>
+                                        <span class="doc-type-label">${docType}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="doc-upload-area ${categoryData[sourceId].selectedDocType ? 'visible' : ''}" id="upload-${sourceId}">
+                                ${categoryData[sourceId].file ? `
+                                    <div class="category-uploaded-file">
+                                        <div class="category-file-info">
+                                            <div class="category-file-icon">${categoryData[sourceId].file.name.split('.').pop().toUpperCase()}</div>
+                                            <div>
+                                                <div class="category-file-name">${categoryData[sourceId].file.name}</div>
+                                                <div class="category-file-size">${formatFileSize(categoryData[sourceId].file.size)}</div>
+                                            </div>
+                                        </div>
+                                        <button class="category-file-remove" onclick="removeCategoryFile('${sourceId}')">&times;</button>
+                                    </div>
+                                    <div class="category-status">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                            <polyline points="22 4 12 14.01 9 11.01"/>
+                                        </svg>
+                                        Document uploaded
+                                    </div>
+                                ` : `
+                                    <div class="mini-drop-zone" data-category="${sourceId}">
+                                        <div class="mini-drop-zone-text">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                <polyline points="17 8 12 3 7 8"/>
+                                                <line x1="12" y1="3" x2="12" y2="15"/>
+                                            </svg>
+                                            Click to upload or drag and drop
+                                        </div>
+                                    </div>
+                                    <div class="category-status pending">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <line x1="12" y1="8" x2="12" y2="12"/>
+                                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                        </svg>
+                                        Please upload a document
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                documentCategories.innerHTML += categoryHtml;
+            });
+
+            // Attach event listeners
+            attachDocumentEventListeners();
+        }
+
+        function attachDocumentEventListeners() {
+            // Document type selection
+            document.querySelectorAll('.doc-type-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const category = option.dataset.category;
+                    const docType = option.dataset.doctype;
+
+                    // Deselect siblings
+                    option.parentElement.querySelectorAll('.doc-type-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    // Select this one
+                    option.classList.add('selected');
+                    categoryData[category].selectedDocType = docType;
+
+                    // Show upload area
+                    const uploadArea = document.getElementById(`upload-${category}`);
+                    if (uploadArea) {
+                        uploadArea.classList.add('visible');
+                    }
+
+                    updateSendButton();
+                });
+            });
+
+            // Mini drop zones
+            document.querySelectorAll('.mini-drop-zone').forEach(zone => {
+                zone.addEventListener('click', () => {
+                    currentUploadCategory = zone.dataset.category;
+                    fileInput.click();
+                });
+
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    currentUploadCategory = zone.dataset.category;
+                    handleCategoryFile(e.dataTransfer.files[0]);
+                });
+            });
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0 && currentUploadCategory) {
+                handleCategoryFile(e.target.files[0]);
+            }
+            fileInput.value = ''; // Reset input
+        });
+
+        function handleCategoryFile(file) {
+            if (!currentUploadCategory || !file) return;
+
+            categoryData[currentUploadCategory].file = file;
+            renderDocumentCategories();
+            updateSendButton();
+            currentUploadCategory = null;
+        }
+
+        function removeCategoryFile(categoryId) {
+            categoryData[categoryId].file = null;
+            renderDocumentCategories();
+            updateSendButton();
+        }
+
+        // Navigation
+        function goToStep(step) {
+            currentStep = step;
+
+            // Update tabs
+            stepTabs.forEach((tab, index) => {
+                tab.classList.remove('active', 'completed');
+                if (index + 1 < step) {
+                    tab.classList.add('completed');
+                } else if (index + 1 === step) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Update content
+            stepContents.forEach((content, index) => {
+                content.classList.remove('active');
+                if (index + 1 === step) {
+                    content.classList.add('active');
+                }
+            });
+
+            // Step-specific actions
+            if (step === 2) {
+                skipBtn.style.display = 'inline-block';
+                renderDocumentCategories();
+            } else {
+                skipBtn.style.display = 'none';
+            }
+
+            if (step === 3) {
+                sendBtn.textContent = 'Done';
+                sendBtn.classList.add('active');
+                showSummary();
+            } else {
+                sendBtn.textContent = 'Send';
+            }
+
+            updateSendButton();
+        }
+
+        function showSummary() {
+            let sourcesHtml = '<p style="color: #666; margin-bottom: 12px; font-size: 13px;">Selected sources of funds and uploaded documents:</p>';
+
+            selectedSources.forEach(sourceId => {
+                const source = documentTypesMap[sourceId];
+                const data = categoryData[sourceId];
+
+                sourcesHtml += `
+                    <div style="margin-bottom: 16px; padding: 12px; background: white; border-radius: 4px; border: 1px solid #E5E5E5;">
+                        <p style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 13px;">${source.label}</p>
+                        <p style="color: #666; font-size: 12px; margin-bottom: 4px;">Document type: ${data.selectedDocType || 'Not selected'}</p>
+                        <p style="color: ${data.file ? '#2E7D32' : '#F57C00'}; font-size: 12px;">
+                            ${data.file ? '✓ ' + data.file.name : '⚠ No document uploaded'}
+                        </p>
+                    </div>
+                `;
+            });
+
+            document.getElementById('selectedSources').innerHTML = sourcesHtml;
+            document.getElementById('uploadedFilesSummary').innerHTML = '';
+        }
+
+        function updateSendButton() {
+            if (currentStep === 1) {
+                if (selectedSources.length > 0) {
+                    sendBtn.classList.add('active');
+                    sendBtn.style.cursor = 'pointer';
+                } else {
+                    sendBtn.classList.remove('active');
+                    sendBtn.style.cursor = 'not-allowed';
+                }
+            } else if (currentStep === 2) {
+                // Check if at least one category has both doc type selected and file uploaded
+                const hasCompleteCategory = selectedSources.some(sourceId => {
+                    const data = categoryData[sourceId];
+                    return data && data.selectedDocType && data.file;
+                });
+
+                if (hasCompleteCategory) {
+                    sendBtn.classList.add('active');
+                    sendBtn.style.cursor = 'pointer';
+                } else {
+                    sendBtn.classList.remove('active');
+                    sendBtn.style.cursor = 'not-allowed';
+                }
+            } else if (currentStep === 3) {
+                sendBtn.classList.add('active');
+                sendBtn.style.cursor = 'pointer';
+            }
+        }
+
+        sendBtn.addEventListener('click', () => {
+            if (currentStep === 1 && selectedSources.length > 0) {
+                goToStep(2);
+            } else if (currentStep === 2) {
+                const hasCompleteCategory = selectedSources.some(sourceId => {
+                    const data = categoryData[sourceId];
+                    return data && data.selectedDocType && data.file;
+                });
+                if (hasCompleteCategory) {
+                    goToStep(3);
+                }
+            } else if (currentStep === 3) {
+                alert('Application submitted successfully!');
+                location.reload();
+            }
+        });
+
+        skipBtn.addEventListener('click', () => {
+            if (currentStep === 2) {
+                goToStep(3);
+            }
+        });
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Initialize
+        updateSendButton();
+    </script>
+</body>
+</html>

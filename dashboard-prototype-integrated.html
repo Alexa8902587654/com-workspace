@@ -1,0 +1,3458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Officers Dashboard - EXANTE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #F5F5F5;
+            color: #212121;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background: #C8E6C9;
+            color: #1B5E20;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #BDBDBD;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9E9E9E;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR - EXANTE Style */
+        .sidebar {
+            width: 200px;
+            background: #FFFFFF;
+            border-right: 1px solid #E5E5E5;
+            padding: 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar-logo {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 12px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #E5E5E5;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-logo-icon {
+            width: 24px;
+            height: 24px;
+            background: #2E7D32;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+        }
+
+        .sidebar-logo-icon svg {
+            transform: rotate(-45deg);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 12px 0;
+        }
+
+        .sidebar-menu-item {
+            padding: 10px 20px;
+            margin: 0;
+            cursor: pointer;
+            color: #666;
+            font-size: 13px;
+            transition: all 0.15s ease;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+            border-radius: 0;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            font-size: 14px;
+            color: #999;
+            transition: color 0.15s;
+        }
+
+        .sidebar-menu-item:hover {
+            background-color: #F8F8F8;
+            color: #333;
+            border-left-color: #E0E0E0;
+        }
+
+        .sidebar-menu-item:hover .menu-icon {
+            color: #666;
+        }
+
+        .sidebar-menu-item.active {
+            background: #F5F9F5;
+            color: #2E7D32;
+            font-weight: 500;
+            border-left-color: #2E7D32;
+        }
+
+        .sidebar-menu-item.active .menu-icon {
+            color: #2E7D32;
+        }
+
+        .sidebar-menu-item {
+            position: relative;
+        }
+
+        .expand-arrow {
+            margin-left: auto;
+            font-size: 12px;
+            transition: transform 0.2s ease;
+            color: #BBB;
+        }
+
+        .sidebar-menu-item.expanded .expand-arrow {
+            transform: rotate(90deg);
+        }
+
+        .submenu {
+            list-style: none;
+            background-color: #FAFAFA;
+            border-left: none;
+            margin: 0;
+            padding: 4px 0;
+            display: none;
+        }
+
+        .sidebar-menu-item.expanded .submenu,
+        .sidebar-menu-item.active .submenu {
+            display: block;
+        }
+
+        .submenu-item {
+            padding: 8px 20px 8px 48px;
+            cursor: pointer;
+            color: #888;
+            font-size: 12px;
+            transition: all 0.15s ease;
+            border-bottom: none;
+            line-height: 1.4;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .submenu-item:hover {
+            background-color: #F0F0F0;
+            color: #333;
+            padding-left: 48px;
+        }
+
+        .submenu-item.active {
+            color: #2E7D32;
+            font-weight: 500;
+        }
+
+        /* MAIN CONTENT - EXANTE Style */
+        .main-content {
+            margin-left: 200px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #F5F5F5;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E5E5E5;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: #888;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .breadcrumb a:hover {
+            color: #333;
+        }
+
+        .header-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #212121;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 240px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px 8px 32px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-size: 13px;
+            background-color: #FFFFFF;
+            transition: all 0.15s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #2E7D32;
+        }
+
+        .search-box::before {
+            content: "⌕";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #999;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .currency-selector {
+            padding: 6px 10px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: #2E7D32;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            font-size: 11px;
+        }
+
+        .settings-icon {
+            font-size: 18px;
+            cursor: pointer;
+            color: #999;
+            padding: 4px;
+        }
+
+        .settings-icon:hover {
+            color: #666;
+        }
+
+        .page-content {
+            flex: 1;
+            padding: 20px 24px;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .page-subtitle {
+            font-size: 13px;
+            color: #888;
+            font-weight: 400;
+            display: none;
+        }
+
+        /* KPI SECTION - EXANTE Style */
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .kpi-card {
+            background: #FFFFFF;
+            padding: 16px 14px;
+            border-radius: 8px;
+            border: 1px solid #E5E5E5;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+        }
+
+        .kpi-card:hover {
+            border-color: #2E7D32;
+            background: #FAFAFA;
+        }
+
+        .kpi-card.active {
+            background: #F5F9F5;
+            border-color: #2E7D32;
+            border-width: 2px;
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .kpi-red { color: #D32F2F; }
+        .kpi-blue { color: #1976D2; }
+        .kpi-orange { color: #E65100; }
+        .kpi-green { color: #2E7D32; }
+        .kpi-amber { color: #F57F17; }
+
+        /* FILTER SECTION - EXANTE Style */
+        .filter-section {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            flex-wrap: nowrap;
+            align-items: center;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 5;
+            min-width: 400px;
+            max-width: 800px;
+        }
+
+        .search-input-wrapper input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-size: 13px;
+            background: #FFFFFF;
+            transition: border-color 0.15s ease;
+        }
+
+        .search-input-wrapper input:focus {
+            outline: none;
+            border-color: #2E7D32;
+        }
+
+        .search-input-wrapper input::placeholder {
+            color: #AAA;
+        }
+
+        .search-input-wrapper::before {
+            content: "⌕";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #999;
+        }
+
+        .filter-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 4px;
+            display: block;
+            font-weight: 500;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        .filter-select {
+            padding: 10px 10px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-size: 13px;
+            background-color: #FFFFFF;
+            cursor: pointer;
+            width: 100%;
+            transition: border-color 0.15s ease;
+        }
+
+        .filter-select:hover {
+            border-color: #CCC;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #2E7D32;
+        }
+
+        .reset-btn {
+            padding: 10px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            background-color: white;
+            color: #666;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 500;
+            align-self: flex-end;
+        }
+
+        .reset-btn:hover {
+            border-color: #2E7D32;
+            color: #2E7D32;
+        }
+
+        /* MAIN LAYOUT - EXANTE Style */
+        .content-wrapper {
+            display: block;
+            width: 100%;
+        }
+
+        /* WORK QUEUE TABLE - EXANTE Style */
+        .work-queue {
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid #E5E5E5;
+            overflow: hidden;
+        }
+
+        .queue-header {
+            padding: 14px 16px;
+            border-bottom: 1px solid #E5E5E5;
+            background: #FAFAFA;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .queue-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .queue-count {
+            background: #F0F0F0;
+            color: #666;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        thead {
+            background: #FAFAFA;
+            border-bottom: 1px solid #E5E5E5;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+        }
+
+        th.sortable:hover {
+            color: #333;
+        }
+
+        th.sortable::after {
+            content: '⇅';
+            position: absolute;
+            right: 8px;
+            opacity: 0.3;
+            font-size: 11px;
+        }
+
+        th.sortable.sorted-asc::after {
+            content: '↑';
+            opacity: 1;
+            color: #2E7D32;
+        }
+
+        th.sortable.sorted-desc::after {
+            content: '↓';
+            opacity: 1;
+            color: #2E7D32;
+        }
+
+        th:first-child {
+            cursor: default;
+        }
+
+        th:first-child::after {
+            content: none;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #F0F0F0;
+            color: #333;
+        }
+
+        tbody tr {
+            transition: background 0.1s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #F8F8F8;
+        }
+
+        .app-id {
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .app-id:hover {
+            color: #2E7D32;
+        }
+
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-processed { background-color: #E8F5E9; color: #2E7D32; }
+        .status-pending { background-color: #FFF8E1; color: #F57C00; }
+        .status-new { background-color: #E3F2FD; color: #1976D2; }
+        .status-rejected { background-color: #FFEBEE; color: #D32F2F; }
+        .status-failed { background-color: #FFEBEE; color: #D32F2F; }
+        .status-canceled { background-color: #F5F5F5; color: #9E9E9E; }
+
+        .sla-normal { background-color: transparent; }
+        .sla-warning { background-color: transparent; }
+        .sla-breach { background-color: transparent; }
+
+        .action-button {
+            padding: 6px 14px;
+            background: #2E7D32;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: background 0.15s ease;
+        }
+
+        .action-button:hover {
+            background: #1B5E20;
+        }
+
+        .action-button:disabled {
+            background: #E0E0E0;
+            cursor: not-allowed;
+        }
+
+        /* SIDEBAR PANELS - EXANTE Style */
+        .sidebar-panel {
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid #E5E5E5;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 12px 14px;
+            background: #FAFAFA;
+            border-bottom: 1px solid #E5E5E5;
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .panel-content {
+            padding: 12px;
+        }
+
+        .context-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid #F0F0F0;
+            font-size: 12px;
+        }
+
+        .context-item:hover {
+            background: #FAFAFA;
+        }
+
+        .context-item:last-child {
+            border-bottom: none;
+        }
+
+        .context-item-title {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .context-item-subtitle {
+            color: #999;
+            font-size: 11px;
+        }
+
+        /* PERFORMANCE SECTION - EXANTE Style */
+        .performance-section {
+            background: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid #E5E5E5;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .performance-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 14px;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .performance-metric {
+            text-align: center;
+            padding: 14px 12px;
+            background: #FAFAFA;
+            border-radius: 8px;
+            border: 1px solid #E8E8E8;
+        }
+
+        .performance-value {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .performance-label {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .perf-green { color: #2E7D32; }
+        .perf-blue { color: #1976D2; }
+        .perf-orange { color: #F57C00; }
+
+        /* DYNAMIC TABLE HEIGHT */
+        .work-queue table {
+            display: table;
+            table-layout: auto;
+        }
+
+        .table-container {
+            border-radius: 0 0 6px 6px;
+            overflow: visible;
+            height: auto;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container.scrollable {
+            max-height: 680px;
+            overflow-y: auto;
+        }
+
+        .table-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .table-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            background: #D0D0D0;
+            border-radius: 4px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+        /* SLA TIMER SECTION */
+        .sla-timer-scroll {
+            max-height: 300px;
+            overflow-y: auto;
+            border-radius: 4px;
+        }
+
+        .sla-timer-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sla-timer-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sla-timer-scroll::-webkit-scrollbar-thumb {
+            background: #D0D0D0;
+            border-radius: 3px;
+        }
+
+        .sla-timer-scroll::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+        .sla-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid #F0F0F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .sla-item:hover {
+            background: #FAFAFA;
+        }
+
+        .sla-item:last-child {
+            border-bottom: none;
+        }
+
+        .sla-item-left {
+            flex: 1;
+        }
+
+        .sla-item-name {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 2px;
+            font-size: 12px;
+        }
+
+        .sla-item-client {
+            color: #999;
+            font-size: 11px;
+        }
+
+        .sla-item-timer {
+            font-weight: 500;
+            text-align: right;
+            white-space: nowrap;
+            margin-left: 8px;
+            font-size: 12px;
+        }
+
+
+        /* RECENT UPDATES / LOGS - CRM Style */
+        .logs-container {
+            max-height: none;
+            overflow-y: visible;
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .log-table tr:nth-child(odd) {
+            background: #F5F5F5;
+        }
+
+        .log-table tr:nth-child(even) {
+            background: #FFFFFF;
+        }
+
+        .log-table td {
+            padding: 14px 16px;
+            vertical-align: top;
+        }
+
+        .log-table td:first-child {
+            width: 180px;
+            white-space: nowrap;
+        }
+
+        .log-timestamp-cell {
+            color: #333;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .log-timestamp-date {
+            display: inline;
+            margin-right: 6px;
+        }
+
+        .log-timestamp-source {
+            display: inline;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .log-description-cell {
+            color: #333;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .log-pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-top: 1px solid #E5E5E5;
+            background: #FAFAFA;
+        }
+
+        .log-pagination-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .log-pagination-select {
+            padding: 6px 28px 6px 10px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-size: 13px;
+            background-color: #FFFFFF;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+        }
+
+        .log-pagination-center {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .log-page-btn {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 13px;
+            color: #666;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .log-page-btn:hover {
+            background: #E8E8E8;
+        }
+
+        .log-page-btn.active {
+            background: #E8E8E8;
+            font-weight: 600;
+        }
+
+        .log-page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .log-pagination-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .log-page-input {
+            width: 50px;
+            padding: 6px 8px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* PAGINATION - EXANTE Style */
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0;
+            padding: 12px 16px;
+            background: #FAFAFA;
+            border-top: 1px solid #E5E5E5;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .pagination-btn {
+            padding: 6px 12px;
+            border: 1px solid #E0E0E0;
+            background: #FFFFFF;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #666;
+            font-weight: 400;
+            transition: all 0.15s ease;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #2E7D32;
+            color: #2E7D32;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            font-size: 12px;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+
+        .page-number {
+            padding: 6px 10px;
+            border: 1px solid transparent;
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #666;
+            transition: all 0.15s ease;
+        }
+
+        .page-number:hover {
+            background: #F0F0F0;
+        }
+
+        .page-number.active {
+            background: #F5F5F5;
+            border-color: #E0E0E0;
+            font-weight: 500;
+        }
+
+        @media (max-width: 1400px) {
+            .kpi-section {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .performance-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 50px;
+                padding: 0;
+            }
+
+            .sidebar-logo span {
+                display: none;
+            }
+
+            .sidebar-menu-item {
+                justify-content: center;
+                padding: 12px 8px;
+                margin: 0;
+            }
+
+            .sidebar-menu-item span:not(.menu-icon) {
+                display: none;
+            }
+
+            .menu-icon {
+                margin: 0;
+            }
+
+            .expand-arrow {
+                display: none;
+            }
+
+            .submenu {
+                display: none !important;
+            }
+
+            .main-content {
+                margin-left: 50px;
+            }
+
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .performance-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ===================================================
+           MANAGER VIEW – View Switcher
+           =================================================== */
+        .view-switcher {
+            display: flex;
+            background-color: #F0F0F0;
+            border-radius: 20px;
+            padding: 4px;
+            width: fit-content;
+            margin-bottom: 20px;
+        }
+        .view-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 20px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #555;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+        .view-btn.active {
+            background: #FFFFFF;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            color: #333;
+            font-weight: 600;
+        }
+        .view-btn:hover:not(.active) {
+            background: #E8E8E8;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Officer / Manager view toggling
+           =================================================== */
+        .officer-view {
+            display: block;
+        }
+        .officer-view.hidden {
+            display: none;
+        }
+        .manager-view {
+            display: none;
+        }
+        .manager-view.active {
+            display: block;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Filter Bar
+           =================================================== */
+        .mgr-filter-bar {
+            background-color: #2E7D32;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 14px;
+            padding: 14px 20px;
+            border-radius: 8px;
+        }
+        .mgr-filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .mgr-filter-group label {
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .mgr-filter-group select {
+            background-color: #FFFFFF;
+            border: 1px solid #CCC;
+            border-radius: 4px;
+            padding: 5px 8px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+            min-width: 100px;
+        }
+        .mgr-filter-group select:focus {
+            outline: none;
+            border-color: #A5D6A7;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – KPI Strip
+           =================================================== */
+        .mgr-kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+        .mgr-kpi-tile {
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            padding: 16px 12px;
+            text-align: center;
+        }
+        .mgr-kpi-value {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #333;
+        }
+        .mgr-val-green { color: #2E7D32; }
+        .mgr-val-amber { color: #F57C00; }
+        .mgr-val-red   { color: #D32F2F; }
+        .mgr-kpi-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Section Title (shared)
+           =================================================== */
+        .mgr-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 1px solid #E5E5E5;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Case Aging Section
+           =================================================== */
+        .mgr-aging-section {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .mgr-aging-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border-right: 1px solid #E5E5E5;
+            padding-right: 24px;
+        }
+        .mgr-aging-right {
+            flex: 0 0 280px;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Bars (shared)
+           =================================================== */
+        .bar-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        .bar-label {
+            width: 70px;
+            min-width: 70px;
+            font-size: 12px;
+            color: #444;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .bar-track {
+            flex-grow: 1;
+            background-color: #F0F0F0;
+            height: 18px;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        .bar-fill {
+            height: 100%;
+            background-color: #A5D6A7;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .bar-value {
+            width: 36px;
+            min-width: 36px;
+            text-align: right;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+        .mgr-threshold-marker {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #D32F2F;
+            z-index: 1;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Breach Trend Table
+           =================================================== */
+        .mgr-trend-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .mgr-trend-table th {
+            padding: 6px 10px;
+            background: #F5F5F5;
+            border: 1px solid #E5E5E5;
+            font-weight: 600;
+            color: #333;
+            text-align: right;
+        }
+        .mgr-trend-table th:first-child { text-align: left; }
+        .mgr-trend-table td {
+            padding: 6px 10px;
+            border: 1px solid #E5E5E5;
+            text-align: right;
+            color: #333;
+        }
+        .mgr-trend-table td:first-child {
+            font-weight: 600;
+            text-align: left;
+            color: #444;
+        }
+        .trend-breach { color: #D32F2F; font-weight: 600; }
+        .trend-risk   { color: #F57C00; font-weight: 600; }
+        .trend-ok     { color: #2E7D32; }
+
+        /* ===================================================
+           MANAGER VIEW – Status Distribution Table
+           =================================================== */
+        .mgr-matrix-container {
+            margin-bottom: 16px;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mgr-matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .mgr-matrix-table thead th {
+            padding: 8px 14px;
+            color: #1976D2;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #E5E5E5;
+            background: #FAFAFA;
+            white-space: nowrap;
+            text-align: right;
+            min-width: 80px;
+        }
+        .mgr-matrix-table thead th:first-child {
+            color: #333;
+            text-align: left;
+            min-width: 100px;
+        }
+        .mgr-matrix-table thead th:last-child {
+            color: #333;
+            min-width: 50px;
+        }
+        .mgr-matrix-table tbody td {
+            padding: 6px 14px;
+            border-bottom: 1px solid #F0F0F0;
+            color: #333;
+            font-size: 13px;
+            text-align: right;
+        }
+        .mgr-matrix-table tbody td:first-child {
+            font-weight: 500;
+            text-align: left;
+        }
+        .mgr-matrix-table tbody td:last-child {
+            font-weight: 700;
+            color: #1976D2;
+        }
+        .mgr-matrix-table tfoot td {
+            padding: 8px 14px;
+            border-top: 2px solid #E5E5E5;
+            font-weight: 700;
+            color: #1976D2;
+            background: #FAFAFA;
+            font-size: 13px;
+            text-align: right;
+        }
+        .mgr-matrix-table tfoot td:first-child {
+            color: #333;
+            text-align: left;
+        }
+        .mgr-matrix-footer {
+            padding: 10px 20px;
+            border-top: 1px solid #E5E5E5;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Officer Performance Table
+           =================================================== */
+        .mgr-officer-table-wrap {
+            margin-bottom: 16px;
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mgr-officer-table-title {
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 1px solid #E5E5E5;
+            background: #FAFAFA;
+        }
+        .mgr-officer-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .mgr-officer-table th {
+            padding: 8px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1976D2;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            border-bottom: 1px solid #E5E5E5;
+            background: #FAFAFA;
+            text-align: right;
+            white-space: nowrap;
+        }
+        .mgr-officer-table th:first-child {
+            text-align: left;
+            color: #333;
+        }
+        .mgr-officer-table tbody td {
+            padding: 7px 12px;
+            font-size: 13px;
+            color: #333;
+            text-align: right;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        .mgr-officer-table tbody td:first-child {
+            font-weight: 500;
+            text-align: left;
+        }
+        .mgr-officer-table tfoot td {
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1976D2;
+            text-align: right;
+            border-top: 2px solid #E5E5E5;
+            background: #FAFAFA;
+        }
+        .mgr-officer-table tfoot td:first-child {
+            color: #333;
+            text-align: left;
+        }
+
+        /* ===================================================
+           MANAGER VIEW – Status Flag Badges
+           =================================================== */
+        .mgr-flag-ok, .mgr-flag-risk, .mgr-flag-overloaded {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .mgr-flag-ok         { background: #E8F5E9; color: #2E7D32; }
+        .mgr-flag-risk       { background: #FFF3E0; color: #F57C00; }
+        .mgr-flag-overloaded { background: #FFCDD2; color: #D32F2F; }
+
+        /* ===================================================
+           MANAGER VIEW – Action Items
+           =================================================== */
+        .mgr-action-list {
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .mgr-action-title {
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            background: #FAFAFA;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .mgr-action-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            gap: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #F0F0F0;
+            transition: background 0.15s;
+        }
+        .mgr-action-item:last-child { border-bottom: none; }
+        .mgr-action-item:hover      { background: #F9F9F9; }
+        .mgr-action-icon {
+            font-size: 16px;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .mgr-action-text {
+            flex: 1;
+            font-size: 13px;
+            color: #333;
+        }
+        .mgr-action-count {
+            display: inline-block;
+            min-width: 22px;
+            text-align: center;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .mgr-action-item.action-red .mgr-action-icon    { color: #D32F2F; }
+        .mgr-action-item.action-red .mgr-action-count   { background: #FFCDD2; color: #D32F2F; }
+        .mgr-action-item.action-amber .mgr-action-icon  { color: #F57C00; }
+        .mgr-action-item.action-amber .mgr-action-count { background: #FFF3E0; color: #F57C00; }
+
+        /* ===========================================
+           POLISH & CONSISTENCY OVERRIDES
+           =========================================== */
+
+        /* 1. Unified card system - consistent borders, radius, headers */
+        .kpi-card, .work-queue, .performance-section, .sidebar-panel,
+        .mgr-kpi-tile, .mgr-aging-section, .mgr-matrix-container,
+        .mgr-officer-table-wrap, .mgr-action-list {
+            border-radius: 6px;
+            border: 1px solid #E0E0E0;
+        }
+        .queue-header, .panel-header, .mgr-action-title, .mgr-officer-table-title {
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #FAFAFA;
+        }
+
+        /* 2. KPI Strip - compact height, dominant numbers, muted labels */
+        .kpi-card { padding: 10px 12px; }
+        .kpi-label { font-size: 10px; color: #888; margin-bottom: 4px; }
+        .kpi-value { font-size: 24px; }
+        .mgr-kpi-tile { padding: 10px 12px; }
+        .mgr-kpi-value { font-size: 22px; }
+        .mgr-kpi-label { font-size: 10px; color: #888; margin-top: 2px; }
+
+        /* 3. Case Aging & SLA Health - slimmer bars, reduced track, balanced */
+        .bar-track { height: 12px; background-color: #EBEBEB; }
+        .bar-item { margin-bottom: 6px; gap: 6px; }
+        .bar-label { width: 64px; min-width: 64px; font-size: 11px; }
+        .bar-value { width: 32px; min-width: 32px; font-size: 11px; }
+        .mgr-threshold-marker { width: 1px; opacity: 0.7; }
+        .mgr-aging-right { flex: 0 0 240px; }
+        .mgr-aging-section { padding: 14px 16px; gap: 16px; }
+        .mgr-section-title { font-size: 11px; padding-bottom: 4px; margin-bottom: 8px; }
+
+        /* 4. Tables - reduced row height, right-aligned numbers, lighter headers */
+        th { padding: 8px 12px; font-size: 10px; font-weight: 500; background: #F8F8F8; }
+        td { padding: 8px 12px; }
+        td:nth-child(n+6), th:nth-child(n+6) { text-align: right; }
+        .mgr-matrix-table thead th, .mgr-officer-table th, .mgr-trend-table th {
+            padding: 6px 10px; font-size: 10px; font-weight: 500; background: #F8F8F8;
+        }
+        .mgr-matrix-table tbody td, .mgr-officer-table tbody td, .mgr-trend-table td {
+            padding: 5px 10px; font-size: 12px;
+        }
+        .status-chip { min-width: 72px; justify-content: center; text-align: center; }
+
+        /* 5. SLA Usage & Ownership Tables */
+        .mgr-sla-usage-table, .mgr-ownership-table {
+            width: 100%; border-collapse: collapse; font-size: 11px;
+        }
+        .mgr-sla-usage-table th, .mgr-ownership-table th {
+            padding: 5px 8px; font-size: 10px; font-weight: 600; background: #F5F5F5;
+            border-bottom: 1px solid #E0E0E0; text-align: right;
+        }
+        .mgr-sla-usage-table th:first-child, .mgr-ownership-table th:first-child { text-align: left; }
+        .mgr-sla-usage-table td, .mgr-ownership-table td {
+            padding: 4px 8px; border-bottom: 1px solid #F0F0F0; text-align: right;
+        }
+        .mgr-sla-usage-table td:first-child, .mgr-ownership-table td:first-child {
+            text-align: left; font-weight: 500;
+        }
+        .mgr-sla-usage-table tfoot td, .mgr-ownership-table tfoot td {
+            font-weight: 600; border-top: 1px solid #E0E0E0; background: #FAFAFA;
+        }
+        .col-ok { color: #2E7D32; }
+        .col-risk { color: #F57C00; }
+        .col-breach { color: #D32F2F; }
+        .flow-net { font-weight: 600; }
+        .mgr-metric-note { font-size: 9px; color: #999; margin-top: 6px; line-height: 1.4; }
+        .mgr-aging-block { margin-bottom: 14px; }
+        .mgr-aging-block:last-child { margin-bottom: 0; }
+        .mgr-aging-right { flex: 0 0 260px; }
+
+        /* 6. Manager Dashboard Stacked Layout */
+        .mgr-full-width { margin-top: 16px; }
+        .mgr-big-number-card {
+            background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 6px;
+            padding: 20px; text-align: center;
+        }
+        .mgr-big-number { font-size: 48px; font-weight: 600; color: #2E7D32; line-height: 1; }
+        .mgr-big-label { font-size: 13px; color: #666; margin-top: 6px; }
+        .mgr-stats-row {
+            display: flex; gap: 12px; margin-top: 16px; align-items: stretch;
+        }
+        .mgr-donut-card {
+            background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 6px;
+            padding: 12px; text-align: center; flex: 1;
+        }
+        .mgr-donut-title {
+            font-size: 11px; font-weight: 600; color: #333;
+            text-align: left; border-bottom: 1px solid #E5E5E5;
+            padding-bottom: 6px; margin-bottom: 10px;
+        }
+        .mgr-donut-wrap { display: flex; justify-content: center; }
+        .mgr-donut { width: 100px; height: 100px; transform: rotate(-90deg); }
+        .mgr-donut-segment { fill: none; stroke-width: 18; }
+        .mgr-donut-text {
+            font-size: 14px; font-weight: 700; fill: #333;
+            transform: rotate(90deg); text-anchor: middle;
+        }
+        .mgr-donut-subtext {
+            font-size: 7px; fill: #888;
+            transform: rotate(90deg); text-anchor: middle;
+        }
+        .mgr-segment-num {
+            font-size: 8px; font-weight: 600; fill: #fff;
+            transform: rotate(90deg); text-anchor: middle;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .mgr-donut-legend {
+            display: flex; flex-wrap: wrap; gap: 4px 8px;
+            justify-content: center; margin-top: 8px; font-size: 9px; color: #666;
+        }
+        .mgr-donut-legend i {
+            display: inline-block; width: 6px; height: 6px;
+            border-radius: 50%; margin-right: 3px; vertical-align: middle;
+        }
+        .mgr-bar-section {
+            background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 6px;
+            padding: 12px; flex: 1;
+        }
+        .mgr-bar-title {
+            font-size: 11px; font-weight: 600; color: #333;
+            border-bottom: 1px solid #E5E5E5; padding-bottom: 6px; margin-bottom: 10px;
+        }
+        .mgr-hbar { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+        .mgr-hbar:last-child { margin-bottom: 0; }
+        .mgr-hbar-label { width: 60px; min-width: 60px; font-size: 10px; color: #444; }
+        .mgr-hbar-track {
+            flex: 1; height: 8px; background: #F0F0F0; border-radius: 2px; overflow: hidden;
+        }
+        .mgr-hbar-fill { height: 100%; border-radius: 2px; }
+        .mgr-hbar-val { width: 65px; text-align: right; font-size: 10px; font-weight: 500; color: #333; }
+        .mgr-matrix-container.mgr-full-width { margin-top: 16px; }
+        .mgr-table-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 14px; background: #FAFAFA; border-bottom: 1px solid #E5E5E5;
+        }
+        .mgr-table-title { font-size: 13px; font-weight: 600; color: #333; }
+        .mgr-period-filter { display: flex; align-items: center; gap: 8px; }
+        .mgr-period-filter label { font-size: 12px; color: #666; }
+        .mgr-period-filter select {
+            padding: 5px 10px; border: 1px solid #E0E0E0; border-radius: 4px;
+            font-size: 12px; background: #FFFFFF; cursor: pointer;
+        }
+        .mgr-period-filter select:focus { outline: none; border-color: #2E7D32; }
+
+        /* Large KPI Strip */
+        .mgr-kpi-strip {
+            display: flex; align-items: center; justify-content: center; gap: 40px; padding: 20px 28px;
+            background: #FFFFFF; border-radius: 6px; border: 1px solid #E5E5E5;
+            margin-bottom: 12px;
+        }
+        .mgr-kpi-item { display: flex; flex-direction: column; gap: 4px; }
+        .mgr-kpi-value { font-size: 36px; font-weight: 700; color: #222; line-height: 1; }
+        .mgr-kpi-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.3px; }
+        .mgr-kpi-divider { width: 1px; height: 48px; background: #E5E5E5; }
+        .mgr-kpi-value.highlight-green { color: #2E7D32; }
+        .mgr-kpi-value.highlight-orange { color: #EF6C00; }
+        .mgr-kpi-value.highlight-red { color: #D32F2F; }
+
+        /* Compact SLA Table - dense, tight rows */
+        .mgr-sla-table-container {
+            background: #FFFFFF; border-radius: 6px; border: 1px solid #E5E5E5;
+            margin-bottom: 12px; overflow: hidden;
+        }
+        .mgr-sla-table-header {
+            padding: 6px 12px; background: #FAFAFA; border-bottom: 1px solid #E5E5E5;
+            font-size: 11px; font-weight: 600; color: #555;
+        }
+        .mgr-sla-table {
+            width: 100%; border-collapse: collapse; font-size: 12px;
+        }
+        .mgr-sla-table th {
+            text-align: left; padding: 6px 12px; font-weight: 500; color: #888;
+            border-bottom: 1px solid #ECECEC; background: #FAFAFA; font-size: 10px;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .mgr-sla-table th.num { text-align: right; }
+        .mgr-sla-table td {
+            padding: 6px 12px; border-bottom: 1px solid #F5F5F5; vertical-align: middle;
+        }
+        .mgr-sla-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+        .mgr-sla-table tr:last-child td { border-bottom: none; }
+        .mgr-sla-table .risk-cell { font-weight: 600; font-size: 11px; }
+        .mgr-sla-table .risk-low { color: #388E3C; }
+        .mgr-sla-table .risk-medium { color: #F57C00; }
+        .mgr-sla-table .risk-high { color: #D32F2F; }
+        .mgr-sla-table .cases-cell { color: #666; font-size: 11px; }
+        .mgr-sla-table .time-cell { font-weight: 700; color: #222; font-size: 13px; }
+        .mgr-sla-table .sla-cell { color: #999; font-size: 11px; }
+        .mgr-sla-table .bar-cell { width: 100px; }
+        .mgr-sla-inline-bar {
+            display: flex; align-items: center; gap: 6px;
+        }
+        .mgr-sla-inline-track {
+            flex: 1; height: 4px; background: #ECECEC; border-radius: 2px;
+            overflow: hidden;
+        }
+        .mgr-sla-inline-fill {
+            height: 100%; border-radius: 2px; max-width: 100%;
+        }
+        .mgr-sla-inline-fill.good { background: #66BB6A; }
+        .mgr-sla-inline-fill.warning { background: #FFA726; }
+        .mgr-sla-inline-fill.breach { background: #EF5350; }
+        .mgr-sla-inline-pct { font-size: 10px; color: #999; min-width: 32px; text-align: right; }
+        .mgr-sla-status {
+            display: inline-flex; align-items: center; gap: 3px;
+            font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 3px;
+        }
+        .mgr-sla-status-icon { font-size: 10px; }
+        .mgr-sla-status.ok { color: #388E3C; background: #E8F5E9; }
+        .mgr-sla-status.near { color: #E65100; background: #FFF3E0; }
+        .mgr-sla-status.breached { color: #FFF; background: #D32F2F; }
+        .mgr-sla-overage { font-size: 9px; color: #D32F2F; font-weight: 600; }
+        .mgr-sla-table tr.row-breached td { background: #FFF8F8; }
+        .mgr-sla-table tr.row-breached .time-cell { color: #D32F2F; }
+
+        /* Unassigned Table */
+        .mgr-unassigned-container {
+            background: #FFFFFF; border-radius: 6px; border: 1px solid #E5E5E5;
+            margin-bottom: 12px; overflow: hidden;
+        }
+        .mgr-unassigned-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 16px; background: #FAFAFA; border-bottom: 1px solid #E5E5E5;
+        }
+        .mgr-unassigned-title { font-size: 13px; font-weight: 600; color: #333; }
+        .mgr-unassigned-count {
+            font-size: 12px; color: #666; background: #F0F0F0;
+            padding: 2px 8px; border-radius: 10px;
+        }
+        .mgr-unassigned-table {
+            width: 100%; border-collapse: collapse; font-size: 12px;
+        }
+        .mgr-unassigned-table th {
+            text-align: left; padding: 8px 12px; font-weight: 500; color: #888;
+            border-bottom: 1px solid #ECECEC; background: #FAFAFA; font-size: 10px;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .mgr-unassigned-table th.num { text-align: right; }
+        .mgr-unassigned-table td {
+            padding: 10px 12px; border-bottom: 1px solid #F5F5F5; color: #333;
+        }
+        .mgr-unassigned-table td.num { text-align: right; }
+        .mgr-unassigned-table tr:last-child td { border-bottom: none; }
+        .mgr-unassigned-table .app-id { font-weight: 600; color: #222; }
+        .mgr-unassigned-table .status-badge {
+            display: inline-block; padding: 3px 8px; border-radius: 4px;
+            font-size: 11px; font-weight: 500;
+        }
+        .mgr-unassigned-table .status-badge.escalation { background: #FFEBEE; color: #C62828; }
+        .mgr-unassigned-table .status-badge.pending { background: #FFF3E0; color: #E65100; }
+        .mgr-unassigned-table .risk-low { color: #388E3C; }
+        .mgr-unassigned-table .risk-medium { color: #F57C00; }
+        .mgr-unassigned-table .risk-high { color: #D32F2F; }
+        .mgr-assign-btn {
+            padding: 6px 12px; background: #2E7D32; color: #FFF; border: none;
+            border-radius: 4px; font-size: 11px; font-weight: 500; cursor: pointer;
+        }
+        .mgr-assign-btn:hover { background: #1B5E20; }
+
+        /* Full Applications Table */
+        .mgr-full-table-container {
+            background: #FFFFFF; border-radius: 6px; border: 1px solid #E5E5E5;
+            margin-top: 24px; overflow: hidden;
+        }
+        .mgr-full-table-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px; background: #FAFAFA; border-bottom: 1px solid #E5E5E5;
+        }
+        .mgr-full-table-title { font-size: 14px; font-weight: 600; color: #333; }
+        .mgr-full-table-count {
+            font-size: 12px; color: #666; background: #F0F0F0;
+            padding: 2px 10px; border-radius: 10px;
+        }
+        .mgr-full-filter-bar {
+            display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+            background: #2E7D32; border-radius: 6px; margin: 12px 16px;
+            flex-wrap: wrap;
+        }
+        .mgr-full-filter-group {
+            display: flex; flex-direction: column; gap: 2px;
+        }
+        .mgr-full-filter-group label {
+            font-size: 9px; color: rgba(255,255,255,0.8); text-transform: uppercase;
+            letter-spacing: 0.3px; font-weight: 500;
+        }
+        .mgr-full-filter-group select {
+            padding: 6px 24px 6px 8px; border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px; font-size: 12px; background: #FFFFFF;
+            color: #333; cursor: pointer; min-width: 100px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+        }
+        .mgr-full-filter-group select:focus { outline: none; border-color: #FFF; }
+        .mgr-full-table {
+            width: 100%; border-collapse: collapse; font-size: 12px;
+        }
+        .mgr-full-table th {
+            text-align: left; padding: 10px 12px; font-weight: 500; color: #888;
+            border-bottom: 1px solid #ECECEC; background: #FAFAFA; font-size: 10px;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .mgr-full-table th.num { text-align: right; }
+        .mgr-full-table th.sortable { cursor: pointer; }
+        .mgr-full-table th.sortable:hover { color: #2E7D32; }
+        .mgr-full-table td {
+            padding: 10px 12px; border-bottom: 1px solid #F5F5F5; color: #333;
+        }
+        .mgr-full-table td.num { text-align: right; }
+        .mgr-full-table tr:hover { background: #FAFAFA; }
+        .mgr-full-table tr:last-child td { border-bottom: none; }
+        .mgr-full-table .app-id { font-weight: 600; color: #222; }
+        .mgr-full-table .status-badge {
+            display: inline-block; padding: 3px 8px; border-radius: 4px;
+            font-size: 11px; font-weight: 500;
+        }
+        .mgr-full-table .status-badge.escalation { background: #FFEBEE; color: #C62828; }
+        .mgr-full-table .status-badge.pending { background: #FFF3E0; color: #E65100; }
+        .mgr-full-table .status-badge.in-review { background: #E3F2FD; color: #1565C0; }
+        .mgr-full-table .status-badge.waiting-for-review { background: #E8F5E9; color: #2E7D32; }
+        .mgr-full-table .risk-low { color: #388E3C; }
+        .mgr-full-table .risk-medium { color: #F57C00; }
+        .mgr-full-table .risk-high { color: #D32F2F; }
+        .mgr-full-table .step-hours-warning { color: #EF6C00; }
+        .mgr-full-table .step-hours-breach { color: #D32F2F; }
+        .mgr-full-pagination {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px; border-top: 1px solid #ECECEC; background: #FAFAFA;
+        }
+        .mgr-full-pagination-info { font-size: 12px; color: #666; }
+        .mgr-full-pagination-btns { display: flex; gap: 8px; }
+        .mgr-full-pagination-btn {
+            padding: 6px 12px; border: 1px solid #DDD; border-radius: 4px;
+            background: #FFF; font-size: 12px; color: #333; cursor: pointer;
+        }
+        .mgr-full-pagination-btn:hover { background: #F5F5F5; border-color: #2E7D32; }
+        .mgr-full-pagination-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <a href="#" class="sidebar-logo">
+                <div class="sidebar-logo-icon">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 0L16 8L8 16L0 8L8 0Z" fill="white"/>
+                    </svg>
+                </div>
+                <span>EXANTE</span>
+            </a>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item"><span class="menu-icon">☆</span> Favourites <span class="expand-arrow">›</span>
+                    <ul class="submenu">
+                        <li class="submenu-item">Waiting for review</li>
+                        <li class="submenu-item">Contact current focus</li>
+                        <li class="submenu-item">Requests</li>
+                        <li class="submenu-item">Events</li>
+                        <li class="submenu-item">Mailing Lists</li>
+                    </ul>
+                </li>
+                <li class="sidebar-menu-item"><span class="menu-icon">◇</span> Client Management</li>
+                <li class="sidebar-menu-item"><span class="menu-icon">⇄</span> Transfers</li>
+                <li class="sidebar-menu-item"><span class="menu-icon">◎</span> Requests</li>
+                <li class="sidebar-menu-item"><span class="menu-icon">⚙</span> Business Settings</li>
+                <li class="sidebar-menu-item"><span class="menu-icon">⚡</span> Risk Management</li>
+                <li class="sidebar-menu-item"><span class="menu-icon">◈</span> Symbols Settings</li>
+                <li class="sidebar-menu-item"><span class="menu-icon">▣</span> Corporate Actions</li>
+                <li class="sidebar-menu-item"><span class="menu-icon">⊞</span> System Management</li>
+            </ul>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="header-left">
+                    <div class="breadcrumb">
+                        <a href="#">Home</a>
+                        <span>›</span>
+                        <a href="#">Reports</a>
+                        <span>›</span>
+                        <span style="color: #333;">Onboarding Officers Dashboard</span>
+                        <span style="color: #999; margin-left: 8px; cursor: pointer;">☆</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search">
+                    </div>
+                    <div class="user-menu">
+                        <div class="user-avatar">AB</div>
+                        <span style="font-size: 13px; color: #333;">Aliaksandra Badrova</span>
+                    </div>
+                    <div class="currency-selector">
+                        <span style="font-size: 14px;">🇺🇸</span>
+                        <span>USD</span>
+                        <span style="font-size: 10px; color: #999;">▼</span>
+                    </div>
+                    <div class="settings-icon">⏱</div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                <!-- PAGE HEADER -->
+                <div class="page-header">
+                    <h1 class="page-title">Onboarding Officers Dashboard</h1>
+                    <p class="page-subtitle">Manage your onboarding workload and track SLA performance</p>
+                </div>
+
+                <!-- VIEW SWITCHER -->
+                <div class="view-switcher">
+                    <button class="view-btn active" onclick="switchView('officer')">Onboarding Officer</button>
+                    <button class="view-btn" onclick="switchView('manager')">Manager</button>
+                </div>
+
+                <div class="officer-view" id="officer-view">
+
+                <!-- FILTER SECTION (TOP) -->
+                <div class="filter-section" style="margin-bottom: 20px;">
+                    <div class="search-input-wrapper">
+                        <input type="text" placeholder="Search by ID or Client Name" oninput="handleSearch(event)">
+                    </div>
+                    <div style="min-width: 135px; flex-shrink: 0;">
+                        <select class="filter-select" onchange="handleStatusFilter(event)">
+                            <option value="">Status</option>
+                            <option value="Waiting for review">Waiting for review</option>
+                            <option value="Escalation">Escalation</option>
+                            <option value="In review">In review</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Rejected">Rejected</option>
+                            <option value="KYC passed">KYC passed</option>
+                            <option value="Funded">Funded</option>
+                        </select>
+                    </div>
+                    <div style="min-width: 135px; flex-shrink: 0;">
+                        <select class="filter-select" onchange="handleTypeFilter(event)">
+                            <option value="">Type</option>
+                            <option value="Individual">Individual</option>
+                            <option value="Corporate">Corporate</option>
+                            <option value="Financial Institution">Financial Institution</option>
+                        </select>
+                    </div>
+                    <div style="min-width: 135px; flex-shrink: 0;">
+                        <select class="filter-select" onchange="handleRiskLevelFilter(event)">
+                            <option value="">Risk Level</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <div style="min-width: 120px; flex-shrink: 0;">
+                        <select class="filter-select" onchange="handleCountryFilter(event)">
+                            <option value="">Country</option>
+                            <option value="AU">Australia</option>
+                            <option value="BE">Belgium</option>
+                            <option value="CA">Canada</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="DE">Germany</option>
+                            <option value="DK">Denmark</option>
+                            <option value="ES">Spain</option>
+                            <option value="FR">France</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="HK">Hong Kong</option>
+                            <option value="IT">Italy</option>
+                            <option value="JP">Japan</option>
+                            <option value="MX">Mexico</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="NO">Norway</option>
+                            <option value="SE">Sweden</option>
+                            <option value="SG">Singapore</option>
+                            <option value="US">United States</option>
+                        </select>
+                    </div>
+                    <div style="min-width: 120px; flex-shrink: 0;">
+                        <select class="filter-select" onchange="handleLegalEntityFilter(event)">
+                            <option value="">Legal Entity</option>
+                            <option value="EXT">EXT</option>
+                            <option value="NOB">NOB</option>
+                            <option value="XNT">XNT</option>
+                            <option value="CFSC">CFSC</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- KPI FILTER CARDS -->
+                <div class="kpi-section">
+                    <div class="kpi-card" onclick="filterByKPI('all', this)">
+                        <div class="kpi-label">All my cases</div>
+                        <div class="kpi-value kpi-green" id="kpi-all">15</div>
+                    </div>
+                    <div class="kpi-card" onclick="filterByKPI('waiting-for-review', this)">
+                        <div class="kpi-label">Waiting for Review</div>
+                        <div class="kpi-value kpi-blue" id="kpi-waiting-for-review">2</div>
+                    </div>
+                    <div class="kpi-card" onclick="filterByKPI('escalation', this)">
+                        <div class="kpi-label">Escalation</div>
+                        <div class="kpi-value kpi-orange" id="kpi-escalation">2</div>
+                    </div>
+                    <div class="kpi-card" onclick="filterByKPI('pending', this)">
+                        <div class="kpi-label">Pending</div>
+                        <div class="kpi-value kpi-green" id="kpi-pending">8</div>
+                    </div>
+                    <div class="kpi-card" onclick="filterByKPI('in-review', this)">
+                        <div class="kpi-label">In Review</div>
+                        <div class="kpi-value kpi-blue" id="kpi-in-review">0</div>
+                    </div>
+                    <div class="kpi-card" onclick="filterByKPI('sla-risk', this)">
+                        <div class="kpi-label">SLA Risk</div>
+                        <div class="kpi-value kpi-amber" id="kpi-sla-risk">3</div>
+                    </div>
+                    <div class="kpi-card" onclick="filterByKPI('sla-breach', this)">
+                        <div class="kpi-label">SLA Breached</div>
+                        <div class="kpi-value kpi-red" id="kpi-breach">2</div>
+                    </div>
+                </div>
+
+                <!-- CONTENT WRAPPER -->
+                <div class="content-wrapper">
+                    <!-- MAIN WORK QUEUE -->
+                    <div class="work-queue">
+                        <div class="table-container">
+                            <table id="work-queue-table-body" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                                <thead>
+                                    <tr>
+                                        <th>CLIENT APPLICATION ID</th>
+                                        <th class="sortable" onclick="sortTable('type')">TYPE</th>
+                                        <th class="sortable" onclick="sortTable('status')">STATUS</th>
+                                        <th class="sortable" onclick="sortTable('legalEntity')">LEGAL ENTITY</th>
+                                        <th class="sortable" onclick="sortTable('country')">COUNTRY</th>
+                                        <th class="sortable" onclick="sortTable('riskLevel')">RISK LEVEL</th>
+                                        <th class="sortable" onclick="sortTable('startDate')">ONB START DATE</th>
+                                        <th class="sortable" onclick="sortTable('startedBeforeHours')">ONB STARTED, HRS</th>
+                                        <th class="sortable" onclick="sortTable('lastStepDate')">LAST STEP DATE</th>
+                                        <th class="sortable" onclick="sortTable('stepHours')">LAST STEP, HRS</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-controls">
+                            <span class="pagination-info">Showing <span id="rows-showing">10</span> of <span id="total-rows">15</span> cases • Page <span id="current-page">1</span> of <span id="total-pages">2</span></span>
+                            <div class="pagination-buttons">
+                                <button class="pagination-btn" onclick="previousPage()" id="prev-btn">← Previous</button>
+                                <button class="pagination-btn" onclick="nextPage()" id="next-btn">Next →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UNASSIGNED SECTION -->
+                <div class="work-queue" style="margin-top: 24px;">
+                    <div class="queue-header">
+                        <span class="queue-title">Unassigned</span>
+                        <span class="queue-count" id="unassigned-count">3</span>
+                    </div>
+                    <div class="table-container unassigned-container">
+                        <table id="unassigned-table-body" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                            <thead>
+                                <tr>
+                                    <th>CLIENT APPLICATION ID</th>
+                                    <th>TYPE</th>
+                                    <th>STATUS</th>
+                                    <th>LEGAL ENTITY</th>
+                                    <th>COUNTRY</th>
+                                    <th>RISK LEVEL</th>
+                                    <th>START DATE</th>
+                                    <th>STARTED BEFORE, HRS</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ACTIVITY LOG SECTION -->
+                <div class="work-queue" style="margin-top: 24px;">
+                    <div class="queue-header">
+                        <span class="queue-title">Activity Log</span>
+                        <div class="search-box" style="width: 200px;">
+                            <input type="text" placeholder="Search by ID" id="logSearchInput" oninput="handleLogSearch(event)">
+                        </div>
+                    </div>
+                    <div class="logs-container" style="max-height: 400px; overflow-y: auto;">
+                        <table class="log-table" id="recent-updates-list">
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="log-pagination">
+                        <div class="log-pagination-left">
+                            <span>Lines per page</span>
+                            <select class="log-pagination-select" id="logLinesPerPage">
+                                <option value="5">5</option>
+                                <option value="7" selected>7</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                        </div>
+                        <div class="log-pagination-center" id="logPageNumbers">
+                            <button class="log-page-btn" onclick="changeLogPage('prev')">&lt;</button>
+                            <button class="log-page-btn active">1</button>
+                            <button class="log-page-btn" onclick="changeLogPage('next')">&gt;</button>
+                        </div>
+                        <div class="log-pagination-right">
+                            <span>Go to page</span>
+                            <input type="number" class="log-page-input" id="logGoToPage" min="1" value="1">
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+
+                <!-- MANAGER VIEW -->
+                <div class="manager-view" id="manager-view">
+
+                    <!-- MANAGER FILTER BAR -->
+                    <div class="mgr-filter-bar">
+                        <div class="mgr-filter-group">
+                            <label>Created Year</label>
+                            <select id="mgr-filter-year" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="2026">2026</option>
+                                <option value="2025">2025</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Created Month</label>
+                            <select id="mgr-filter-month" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="jan">Jan</option>
+                                <option value="feb">Feb</option>
+                                <option value="dec">Dec</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Onboarding Officer</label>
+                            <select id="mgr-filter-officer" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="Officer 1">Officer 1</option>
+                                <option value="Officer 2">Officer 2</option>
+                                <option value="Officer 3">Officer 3</option>
+                                <option value="Officer 4">Officer 4</option>
+                                <option value="Officer 5">Officer 5</option>
+                                <option value="Officer 6">Officer 6</option>
+                                <option value="Officer 7">Officer 7</option>
+                                <option value="Officer 8">Officer 8</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Client Type</label>
+                            <select id="mgr-filter-type" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="individual">Individual</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="financial">Financial Institution</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Status</label>
+                            <select id="mgr-filter-status" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="waiting">Waiting for review</option>
+                                <option value="escalation">Escalation</option>
+                                <option value="inreview">In review</option>
+                                <option value="pending">Pending</option>
+                                <option value="rejected">Rejected</option>
+                                <option value="kycpassed">KYC passed</option>
+                                <option value="funded">Funded</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Legal Entity</label>
+                            <select id="mgr-filter-entity" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="ext">EXT</option>
+                                <option value="nob">NOB</option>
+                                <option value="xnt">XNT</option>
+                                <option value="cfsc">CFSC</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Country</label>
+                            <select id="mgr-filter-country" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="europe">Europe</option>
+                                <option value="asia">Asia &amp; Pacific</option>
+                                <option value="namerica">North America</option>
+                                <option value="samerica">South America</option>
+                                <option value="africa">Africa</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Risk Level</label>
+                            <select id="mgr-filter-risk" onchange="applyManagerFilters()">
+                                <option value="all">All</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="mgr-filter-group">
+                            <label>Period</label>
+                            <select id="mgr-filter-period" onchange="applyManagerFilters()">
+                                <option value="all">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="7d" selected>Last 7 Days</option>
+                                <option value="30d">Last 30 Days</option>
+                                <option value="mtd">Month to Date</option>
+                                <option value="qtd">Quarter to Date</option>
+                                <option value="ytd">Year to Date</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- MANAGER DASHBOARD LAYOUT - COMPACT -->
+
+                    <!-- ROW 1: Inline KPI Strip -->
+                    <div class="mgr-kpi-strip">
+                        <div class="mgr-kpi-item">
+                            <span class="mgr-kpi-value">192</span>
+                            <span class="mgr-kpi-label">Active</span>
+                        </div>
+                        <div class="mgr-kpi-divider"></div>
+                        <div class="mgr-kpi-item">
+                            <span class="mgr-kpi-value highlight-green">93%</span>
+                            <span class="mgr-kpi-label">Within SLA</span>
+                        </div>
+                        <div class="mgr-kpi-divider"></div>
+                        <div class="mgr-kpi-item">
+                            <span class="mgr-kpi-value highlight-orange">10</span>
+                            <span class="mgr-kpi-label">At Risk</span>
+                        </div>
+                        <div class="mgr-kpi-divider"></div>
+                        <div class="mgr-kpi-item">
+                            <span class="mgr-kpi-value highlight-red">5</span>
+                            <span class="mgr-kpi-label">Breached</span>
+                        </div>
+                    </div>
+
+                    <!-- ROW 2: Assignee Table -->
+                    <div class="mgr-matrix-container mgr-full-width">
+                        <div class="mgr-table-header">
+                            <span class="mgr-table-title">Assignee Status Distribution</span>
+                        </div>
+                        <table class="mgr-matrix-table" id="mgr-assignee-table">
+                            <thead>
+                                <tr>
+                                    <th>Assignee</th>
+                                    <th>ESCALATION</th>
+                                    <th>PENDING</th>
+                                    <th>RM PENDING</th>
+                                    <th>WAITING FOR REVIEW</th>
+                                    <th>IN REVIEW</th>
+                                    <th>T:</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mgr-assignee-tbody">
+                                <tr data-officer="Officer 1">
+                                    <td>Officer 1</td>
+                                    <td>0</td>
+                                    <td>3</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>1</td>
+                                    <td>7</td>
+                                </tr>
+                                <tr data-officer="Officer 2">
+                                    <td>Officer 2</td>
+                                    <td>1</td>
+                                    <td>8</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>2</td>
+                                    <td>16</td>
+                                </tr>
+                                <tr data-officer="Officer 3">
+                                    <td>Officer 3</td>
+                                    <td>0</td>
+                                    <td>12</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>14</td>
+                                </tr>
+                                <tr data-officer="Officer 4">
+                                    <td>Officer 4</td>
+                                    <td>2</td>
+                                    <td>15</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>1</td>
+                                    <td>25</td>
+                                </tr>
+                                <tr data-officer="Officer 5">
+                                    <td>Officer 5</td>
+                                    <td>1</td>
+                                    <td>20</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>28</td>
+                                </tr>
+                                <tr data-officer="Officer 6">
+                                    <td>Officer 6</td>
+                                    <td>0</td>
+                                    <td>18</td>
+                                    <td>4</td>
+                                    <td>3</td>
+                                    <td>1</td>
+                                    <td>26</td>
+                                </tr>
+                                <tr data-officer="Officer 7">
+                                    <td>Officer 7</td>
+                                    <td>3</td>
+                                    <td>25</td>
+                                    <td>3</td>
+                                    <td>5</td>
+                                    <td>2</td>
+                                    <td>38</td>
+                                </tr>
+                                <tr data-officer="Officer 8">
+                                    <td>Officer 8</td>
+                                    <td>2</td>
+                                    <td>30</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>0</td>
+                                    <td>36</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Totals</td>
+                                    <td>9</td>
+                                    <td>131</td>
+                                    <td>18</td>
+                                    <td>22</td>
+                                    <td>10</td>
+                                    <td>190</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="mgr-matrix-footer">
+                            <span>Grouped by: Status</span>
+                            <span>Showing 8 of 8 officers.</span>
+                        </div>
+                    </div>
+
+                    <!-- ROW 3: SLA Table -->
+                    <div class="mgr-sla-table-container">
+                        <div class="mgr-sla-table-header">Processing Time vs SLA</div>
+                        <table class="mgr-sla-table">
+                            <thead>
+                                <tr>
+                                    <th>Risk</th>
+                                    <th class="num">Cases</th>
+                                    <th class="num">Avg Time</th>
+                                    <th class="num">SLA</th>
+                                    <th class="bar-cell">% Used</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="risk-cell risk-low">Low</td>
+                                    <td class="num cases-cell">44</td>
+                                    <td class="num time-cell">2.8d</td>
+                                    <td class="num sla-cell">5d</td>
+                                    <td class="bar-cell">
+                                        <div class="mgr-sla-inline-bar">
+                                            <div class="mgr-sla-inline-track">
+                                                <div class="mgr-sla-inline-fill good" style="width: 56%;"></div>
+                                            </div>
+                                            <span class="mgr-sla-inline-pct">56%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="risk-cell risk-medium">Medium</td>
+                                    <td class="num cases-cell">96</td>
+                                    <td class="num time-cell">8.2d</td>
+                                    <td class="num sla-cell">10d</td>
+                                    <td class="bar-cell">
+                                        <div class="mgr-sla-inline-bar">
+                                            <div class="mgr-sla-inline-track">
+                                                <div class="mgr-sla-inline-fill warning" style="width: 82%;"></div>
+                                            </div>
+                                            <span class="mgr-sla-inline-pct">82%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="row-breached">
+                                    <td class="risk-cell risk-high">High</td>
+                                    <td class="num cases-cell">52</td>
+                                    <td class="num time-cell">16.1d</td>
+                                    <td class="num sla-cell">15d</td>
+                                    <td class="bar-cell">
+                                        <div class="mgr-sla-inline-bar">
+                                            <div class="mgr-sla-inline-track">
+                                                <div class="mgr-sla-inline-fill breach" style="width: 100%;"></div>
+                                            </div>
+                                            <span class="mgr-sla-inline-pct">107%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- ROW 3: Unassigned Applications Table -->
+                    <div class="mgr-unassigned-container">
+                        <div class="mgr-unassigned-header">
+                            <span class="mgr-unassigned-title">Unassigned</span>
+                            <span class="mgr-unassigned-count">3</span>
+                        </div>
+                        <table class="mgr-unassigned-table">
+                            <thead>
+                                <tr>
+                                    <th>Client Application ID</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Legal Entity</th>
+                                    <th>Country</th>
+                                    <th>Risk Level</th>
+                                    <th>Start Date</th>
+                                    <th class="num">Started Before, Hrs</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="app-id">5028</td>
+                                    <td>Individual</td>
+                                    <td><span class="status-badge escalation">Escalation</span></td>
+                                    <td>XNT</td>
+                                    <td>NO</td>
+                                    <td class="risk-low">Low</td>
+                                    <td>2026-01-19</td>
+                                    <td class="num">80</td>
+                                    <td><button class="mgr-assign-btn">Assign to</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="app-id">4600</td>
+                                    <td>Corporate</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td>EXT</td>
+                                    <td>BE</td>
+                                    <td class="risk-medium">Medium</td>
+                                    <td>2026-01-20</td>
+                                    <td class="num">60</td>
+                                    <td><button class="mgr-assign-btn">Assign to</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="app-id">7123</td>
+                                    <td>Individual</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td>NOB</td>
+                                    <td>DK</td>
+                                    <td class="risk-low">Low</td>
+                                    <td>2026-01-22</td>
+                                    <td class="num">40</td>
+                                    <td><button class="mgr-assign-btn">Assign to</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================================
+        // DATA STORE
+        // ============================================================================
+        const allCases = {
+            assigned: [
+                { id: '8861', client: 'John Smith', type: 'Individual', stage: 'Review', status: 'Pending', legalEntity: 'XNT', country: 'GB', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 48, lastStepDate: '2026-01-28', stepHours: 12, sla: 'normal', slaMinutesLeft: 240, blocked: false, escalated: true, owner: true, assignee: 'A. Badrova', am: 'M. Johnson', createdDate: '2026-01-20' },
+                { id: '9261', client: 'Jane Doe', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'EXT', country: 'US', riskLevel: 'Low', startDate: '2026-01-18', startedBeforeHours: 96, lastStepDate: '2026-01-30', stepHours: 2, sla: 'breach', slaMinutesLeft: -117, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'S. Williams', createdDate: '2026-01-18' },
+                { id: '8829', client: 'Acme Corp', type: 'Corporate', stage: 'Under Review', status: 'In review', legalEntity: 'NOB', country: 'DE', riskLevel: 'High', startDate: '2026-01-19', startedBeforeHours: 72, lastStepDate: '2026-01-29', stepHours: 8, sla: 'breach', slaMinutesLeft: -57, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'J. Davis', createdDate: '2026-01-19' },
+                { id: '4846', client: 'Tech Ventures Ltd', type: 'Corporate', stage: 'Pending ONBA', status: 'Waiting for review', legalEntity: 'XNT', country: 'SG', riskLevel: 'Medium', startDate: '2026-01-22', startedBeforeHours: 24, lastStepDate: '2026-01-29', stepHours: 6, sla: 'normal', slaMinutesLeft: 228, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'R. Miller', createdDate: '2026-01-22' },
+                { id: '3933', client: 'Global Solutions', type: 'Financial Institution', stage: 'Under Review', status: 'Pending', legalEntity: 'EXT', country: 'FR', riskLevel: 'High', startDate: '2026-01-21', startedBeforeHours: 36, lastStepDate: '2026-01-30', stepHours: 4, sla: 'warning', slaMinutesLeft: 90, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'K. Brown', createdDate: '2026-01-21' },
+                { id: '9374', client: 'Innovation Labs', type: 'Corporate', stage: 'Review', status: 'Pending', legalEntity: 'NOB', country: 'CH', riskLevel: 'Low', startDate: '2026-01-23', startedBeforeHours: 18, lastStepDate: '2026-01-29', stepHours: 10, sla: 'normal', slaMinutesLeft: 328, blocked: true, escalated: false, owner: true, assignee: 'A. Badrova', am: 'L. Garcia', createdDate: '2026-01-23' },
+                { id: '6690', client: 'Michael Brown', type: 'Individual', stage: 'Under Review', status: 'Escalation', legalEntity: 'XNT', country: 'AU', riskLevel: 'Medium', startDate: '2026-01-17', startedBeforeHours: 120, lastStepDate: '2026-01-28', stepHours: 14, sla: 'normal', slaMinutesLeft: 300, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'P. Martinez', createdDate: '2026-01-17' },
+                { id: '1439', client: 'Sarah Johnson', type: 'Individual', stage: 'Under Review', status: 'In review', legalEntity: 'EXT', country: 'CA', riskLevel: 'Low', startDate: '2026-01-15', startedBeforeHours: 144, lastStepDate: '2026-01-29', stepHours: 3, sla: 'breach', slaMinutesLeft: -200, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'T. Anderson', createdDate: '2026-01-15' },
+                { id: '5948', client: 'David Lee', type: 'Individual', stage: 'Review', status: 'Pending', legalEntity: 'NOB', country: 'JP', riskLevel: 'Medium', startDate: '2026-01-24', startedBeforeHours: 12, lastStepDate: '2026-01-30', stepHours: 1, sla: 'warning', slaMinutesLeft: 78, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'N. Thomas', createdDate: '2026-01-24' },
+                { id: '7654', client: 'Sophia Martinez', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'XNT', country: 'ES', riskLevel: 'Low', startDate: '2026-01-25', startedBeforeHours: 6, lastStepDate: '2026-01-30', stepHours: 2, sla: 'normal', slaMinutesLeft: 420, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'C. Jackson', createdDate: '2026-01-25' },
+                { id: '2109', client: 'James Wilson', type: 'Corporate', stage: 'Review', status: 'Waiting for review', legalEntity: 'EXT', country: 'NL', riskLevel: 'High', startDate: '2026-01-22', startedBeforeHours: 30, lastStepDate: '2026-01-29', stepHours: 7, sla: 'normal', slaMinutesLeft: 180, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'E. White', createdDate: '2026-01-22' },
+                { id: '3847', client: 'Emma Davis', type: 'Individual', stage: 'Under Review', status: 'Pending', legalEntity: 'NOB', country: 'IT', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 54, lastStepDate: '2026-01-30', stepHours: 5, sla: 'warning', slaMinutesLeft: 65, blocked: false, escalated: true, owner: true, assignee: 'A. Badrova', am: 'D. Harris', createdDate: '2026-01-20' },
+                { id: '5012', client: 'Oliver Chen', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'XNT', country: 'HK', riskLevel: 'Low', startDate: '2026-01-24', startedBeforeHours: 15, lastStepDate: '2026-01-30', stepHours: 3, sla: 'warning', slaMinutesLeft: 45, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'F. Clark', createdDate: '2026-01-24' },
+                { id: '9876', client: 'Isabella Rodriguez', type: 'Financial Institution', stage: 'Review', status: 'In review', legalEntity: 'EXT', country: 'MX', riskLevel: 'High', startDate: '2026-01-23', startedBeforeHours: 20, lastStepDate: '2026-01-29', stepHours: 9, sla: 'normal', slaMinutesLeft: 350, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'G. Lewis', createdDate: '2026-01-23' },
+                { id: '4321', client: 'Lucas Thompson', type: 'Corporate', stage: 'Under Review', status: 'Pending', legalEntity: 'NOB', country: 'SE', riskLevel: 'Medium', startDate: '2026-01-21', startedBeforeHours: 42, lastStepDate: '2026-01-29', stepHours: 11, sla: 'normal', slaMinutesLeft: 250, blocked: true, escalated: false, owner: true, assignee: 'A. Badrova', am: 'H. Robinson', createdDate: '2026-01-21' },
+            ],
+            unassigned: [
+                { id: '5028', client: 'Emily Wilson', type: 'Individual', status: 'Escalation', legalEntity: 'XNT', country: 'NO', riskLevel: 'Low', startDate: '2026-01-19', startedBeforeHours: 80, lastStepDate: '2026-01-28', stepHours: 15, sla: 'normal', slaMinutesLeft: 360, owner: false, am: 'M. Johnson', createdDate: '2026-01-19' },
+                { id: '4600', client: 'Robert Taylor', type: 'Corporate', status: 'Pending', legalEntity: 'EXT', country: 'BE', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 60, lastStepDate: '2026-01-29', stepHours: 8, sla: 'normal', slaMinutesLeft: 330, owner: false, am: 'S. Williams', createdDate: '2026-01-20' },
+                { id: '7123', client: 'Lisa Anderson', type: 'Individual', status: 'Pending', legalEntity: 'NOB', country: 'DK', riskLevel: 'Low', startDate: '2026-01-22', startedBeforeHours: 40, lastStepDate: '2026-01-30', stepHours: 4, sla: 'normal', slaMinutesLeft: 240, owner: false, am: 'J. Davis', createdDate: '2026-01-22' },
+            ]
+        };
+
+        // Manager view synthetic data (192 cases matching dashboard totals)
+        const mgrCases = (function() {
+            const officerData = [
+                {name:'Officer 1', s:{Escalation:0,Pending:3,'Waiting for review':2,'In review':1,Rejected:1,'KYC passed':1,Funded:1}},
+                {name:'Officer 2', s:{Escalation:1,Pending:8,'Waiting for review':3,'In review':2,Rejected:1,'KYC passed':1,Funded:0}},
+                {name:'Officer 3', s:{Escalation:0,Pending:12,'Waiting for review':1,'In review':0,Rejected:1,'KYC passed':1,Funded:1}},
+                {name:'Officer 4', s:{Escalation:2,Pending:15,'Waiting for review':4,'In review':1,Rejected:2,'KYC passed':0,Funded:0}},
+                {name:'Officer 5', s:{Escalation:1,Pending:20,'Waiting for review':2,'In review':3,Rejected:1,'KYC passed':1,Funded:1}},
+                {name:'Officer 6', s:{Escalation:0,Pending:18,'Waiting for review':3,'In review':1,Rejected:2,'KYC passed':0,Funded:0}},
+                {name:'Officer 7', s:{Escalation:3,Pending:25,'Waiting for review':5,'In review':2,Rejected:1,'KYC passed':1,Funded:1}},
+                {name:'Officer 8', s:{Escalation:2,Pending:30,'Waiting for review':2,'In review':0,Rejected:1,'KYC passed':1,Funded:0}}
+            ];
+            const pairs = [];
+            officerData.forEach(o => {
+                Object.keys(o.s).forEach(status => {
+                    for (let i = 0; i < o.s[status]; i++) pairs.push({officer: o.name, status});
+                });
+            });
+            const pool = counts => { const a = []; counts.forEach(c => { for (let i = 0; i < c[1]; i++) a.push(c[0]); }); return a; };
+            const shuffle = (arr, seed) => {
+                const a = [...arr]; let s = seed;
+                for (let i = a.length - 1; i > 0; i--) {
+                    s = (s * 1664525 + 1013904223) & 0x7fffffff;
+                    const j = s % (i + 1);
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                return a;
+            };
+            const sType   = shuffle(pool([['Individual',96],['Corporate',78],['Financial Institution',18]]), 42);
+            const sLE     = shuffle(pool([['ext',106],['nob',54],['xnt',24],['cfsc',8]]), 123);
+            const sRegion = shuffle(pool([['europe',93],['asia',42],['namerica',35],['samerica',15],['africa',7]]), 456);
+            const sRisk   = shuffle(pool([['medium',100],['high',54],['low',38]]), 789);
+            const sYear   = shuffle(pool([['2026',154],['2025',38]]), 101);
+            const sMonth  = shuffle(pool([['jan',70],['feb',60],['dec',62]]), 202);
+            // Derived fields: case age, delay owner, recency
+            let aSeed = 777;
+            const ages = Array.from({length: pairs.length}, () => {
+                aSeed = (aSeed * 1664525 + 1013904223) & 0x7fffffff;
+                const r = (aSeed % 1000) / 1000;
+                return Math.round(12 + Math.pow(r, 2.8) * 340);
+            });
+            let dSeed = 888;
+            const delays = Array.from({length: pairs.length}, () => {
+                dSeed = (dSeed * 1664525 + 1013904223) & 0x7fffffff;
+                const r = dSeed % 100;
+                if (r < 35) return 'Officer';
+                if (r < 60) return 'Compliance';
+                if (r < 85) return 'Client';
+                return 'External';
+            });
+            let cSeed = 999;
+            const createdDays = Array.from({length: pairs.length}, () => {
+                cSeed = (cSeed * 1664525 + 1013904223) & 0x7fffffff;
+                return 1 + (cSeed % 30);
+            });
+            return pairs.map((p, i) => ({
+                officer: p.officer, status: p.status,
+                type: sType[i], le: sLE[i], region: sRegion[i],
+                risk: sRisk[i], year: sYear[i], month: sMonth[i],
+                ageHours: ages[i], delayCategory: delays[i], createdDaysAgo: createdDays[i]
+            }));
+        })();
+
+        const filters = {
+            search: '',
+            status: '',
+            type: '',
+            riskLevel: '',
+            country: '',
+            legalEntity: '',
+            kpiFilter: null
+        };
+
+        // Pagination state
+        let currentPage = 1;
+        const rowsPerPage = 13;
+
+        // Sort state
+        let sortColumn = null;
+        let sortDirection = 'asc';
+
+        // Log data structure
+        const logs = [
+            { id: '9261', action: 'uploaded', description: 'Uploaded KYC documents', time: '2m ago', category: 'Document' },
+            { id: '8829', action: 'reviewed', description: 'Added compliance review comment', time: '8m ago', category: 'Compliance' },
+            { id: '4846', action: 'updated', description: 'Changed status to Pending ONBA', time: '15m ago', category: 'Status' },
+            { id: '3933', action: 'updated', description: 'Updated client profile', time: '22m ago', category: 'Profile' },
+            { id: '6690', action: 'flagged', description: 'Flagged for high-risk review', time: '35m ago', category: 'Risk' },
+            { id: '7654', action: 'assigned', description: 'Case assigned to you', time: '45m ago', category: 'Assignment' },
+            { id: '1439', action: 'reviewed', description: 'Completed compliance check', time: '1h ago', category: 'Compliance' },
+            { id: '5012', action: 'uploaded', description: 'Uploaded identity documents', time: '1h 15m ago', category: 'Document' },
+            { id: '3847', action: 'flagged', description: 'SLA warning triggered', time: '1h 30m ago', category: 'SLA' },
+            { id: '2109', action: 'updated', description: 'Client information updated', time: '2h ago', category: 'Profile' },
+        ];
+
+        // ============================================================================
+        // HELPER FUNCTIONS
+        // ============================================================================
+        function formatSLATimer(minutes) {
+            if (minutes <= 0) {
+                return 'Breached ' + Math.abs(minutes) + 'm ago';
+            } else if (minutes < 120) {
+                return '' + minutes + 'm left';
+            } else {
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+                return '' + hours + 'h ' + mins + 'm';
+            }
+        }
+
+        function getSLAClass(minutes) {
+            if (minutes <= 0) return 'sla-breach';
+            if (minutes < 120) return 'sla-warning';
+            return 'sla-normal';
+        }
+
+        function getStatusColor(status) {
+            const map = {
+                'Processed': 'status-processed',
+                'Pending': 'status-pending',
+                'New': 'status-new',
+                'Rejected': 'status-rejected',
+                'Failed': 'status-failed',
+                'Canceled': 'status-canceled',
+                'In review': 'status-processed',
+                'Waiting for review': 'status-pending',
+                'Escalation': 'status-rejected'
+            };
+            return map[status] || 'status-pending';
+        }
+
+        function matchesFilters(caseData) {
+            if (filters.search) {
+                const searchLower = filters.search.toLowerCase();
+                const idMatch = caseData.id.toLowerCase().includes(searchLower);
+                const clientMatch = caseData.client && caseData.client.toLowerCase().includes(searchLower);
+                if (!idMatch && !clientMatch) {
+                    return false;
+                }
+            }
+
+            if (filters.status && caseData.status !== filters.status) {
+                return false;
+            }
+
+            if (filters.type && caseData.type !== filters.type) {
+                return false;
+            }
+
+            if (filters.riskLevel && caseData.riskLevel !== filters.riskLevel) {
+                return false;
+            }
+
+            if (filters.country && caseData.country !== filters.country) {
+                return false;
+            }
+
+            if (filters.legalEntity && caseData.legalEntity !== filters.legalEntity) {
+                return false;
+            }
+
+            if (filters.kpiFilter === 'waiting-for-review' && caseData.status !== 'Waiting for review') return false;
+            if (filters.kpiFilter === 'escalation' && caseData.status !== 'Escalation') return false;
+            if (filters.kpiFilter === 'pending' && caseData.status !== 'Pending') return false;
+            if (filters.kpiFilter === 'in-review' && caseData.status !== 'In review') return false;
+            if (filters.kpiFilter === 'sla-risk' && (caseData.stepHours <= 7 || caseData.stepHours >= 10)) return false;
+            if (filters.kpiFilter === 'sla-breach' && caseData.stepHours <= 10) return false;
+
+            return true;
+        }
+
+        function sortTable(column) {
+            // Toggle sort direction if clicking same column
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+
+            // Update header classes
+            document.querySelectorAll('th.sortable').forEach(th => {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+            });
+
+            const activeHeader = document.querySelector(`th.sortable[onclick="sortTable('${column}')"]`);
+            if (activeHeader) {
+                activeHeader.classList.add(sortDirection === 'asc' ? 'sorted-asc' : 'sorted-desc');
+            }
+
+            // Reset to first page when sorting
+            currentPage = 1;
+            renderWorkQueue();
+        }
+
+        function sortCases(cases, column, direction) {
+            const sorted = [...cases];
+
+            sorted.sort((a, b) => {
+                let aVal = a[column];
+                let bVal = b[column];
+
+                // Handle risk level with priority
+                if (column === 'riskLevel') {
+                    const riskOrder = { 'High': 3, 'Medium': 2, 'Low': 1 };
+                    aVal = riskOrder[aVal] || 0;
+                    bVal = riskOrder[bVal] || 0;
+                }
+                // Handle dates
+                else if (column === 'startDate' || column === 'lastStepDate') {
+                    aVal = new Date(aVal).getTime();
+                    bVal = new Date(bVal).getTime();
+                }
+                // Handle numbers
+                else if (column === 'startedBeforeHours' || column === 'stepHours') {
+                    aVal = Number(aVal);
+                    bVal = Number(bVal);
+                }
+                // Handle strings
+                else {
+                    aVal = String(aVal).toLowerCase();
+                    bVal = String(bVal).toLowerCase();
+                }
+
+                if (aVal < bVal) return direction === 'asc' ? -1 : 1;
+                if (aVal > bVal) return direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            return sorted;
+        }
+
+        function renderWorkQueue() {
+            let filteredCases = allCases.assigned.filter(matchesFilters);
+            const tbody = document.querySelector('#work-queue-table-body tbody');
+            const container = document.querySelector('.table-container');
+
+            if (filteredCases.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 32px; color: #999;">No cases found</td></tr>';
+                container.classList.remove('scrollable');
+                updatePaginationControls(0, 0);
+                return;
+            }
+
+            // Apply sorting if a column is selected
+            if (sortColumn) {
+                filteredCases = sortCases(filteredCases, sortColumn, sortDirection);
+            }
+
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredCases.length / rowsPerPage);
+            if (currentPage > totalPages) {
+                currentPage = totalPages || 1;
+            }
+
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const paginatedCases = filteredCases.slice(startIndex, endIndex);
+
+            tbody.innerHTML = paginatedCases.map(c => {
+                const slaClass = getSLAClass(c.slaMinutesLeft);
+                const statusClass = getStatusColor(c.status);
+                let stepHoursCellBg = '';
+                if (c.stepHours > 10) {
+                    stepHoursCellBg = 'background-color: #FFEBEE;';
+                } else if (c.stepHours > 7 && c.stepHours <= 10) {
+                    stepHoursCellBg = 'background-color: #FFF3E0;';
+                }
+
+                return `
+                    <tr class="${slaClass}">
+                        <td style="padding: 12px 16px;"><span class="app-id">${c.id}</span></td>
+                        <td style="padding: 12px 16px;">${c.type}</td>
+                        <td style="padding: 12px 16px;"><span class="status-chip ${statusClass}">${c.status}</span></td>
+                        <td style="padding: 12px 16px;">${c.legalEntity}</td>
+                        <td style="padding: 12px 16px;">${c.country}</td>
+                        <td style="padding: 12px 16px;"><span style="color: ${c.riskLevel === 'High' ? '#D32F2F' : c.riskLevel === 'Medium' ? '#F57C00' : '#2E7D32'}; font-weight: 500;">${c.riskLevel}</span></td>
+                        <td style="padding: 12px 16px;">${c.startDate}</td>
+                        <td style="padding: 12px 16px;">${c.startedBeforeHours}</td>
+                        <td style="padding: 12px 16px;">${c.lastStepDate}</td>
+                        <td style="padding: 12px 16px; ${stepHoursCellBg}"><span style="color: #000;">${c.stepHours}</span></td>
+                    </tr>
+                `;
+            }).join('');
+
+            container.classList.add('scrollable');
+            updatePaginationControls(currentPage, totalPages, paginatedCases.length, filteredCases.length);
+        }
+
+        function updatePaginationControls(page, totalPages, rowsShowing, totalRows) {
+            document.getElementById('current-page').textContent = page;
+            document.getElementById('total-pages').textContent = totalPages;
+            document.getElementById('rows-showing').textContent = rowsShowing;
+            document.getElementById('total-rows').textContent = totalRows;
+
+            document.getElementById('prev-btn').disabled = page <= 1;
+            document.getElementById('next-btn').disabled = page >= totalPages;
+        }
+
+        function nextPage() {
+            const filteredCases = allCases.assigned.filter(matchesFilters);
+            const totalPages = Math.ceil(filteredCases.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderWorkQueue();
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderWorkQueue();
+            }
+        }
+
+        function renderUnassigned() {
+            const filtered = allCases.unassigned.filter(matchesFilters);
+            const tbody = document.querySelector('#unassigned-table-body tbody');
+            const unassignedContainer = document.querySelector('.unassigned-container');
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 32px; color: #999;">No unassigned cases</td></tr>';
+                document.getElementById('unassigned-count').textContent = '0';
+                if (unassignedContainer) unassignedContainer.classList.remove('scrollable');
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(c => {
+                const statusClass = getStatusColor(c.status);
+                return `
+                    <tr class="sla-normal">
+                        <td style="padding: 12px 16px;"><span class="app-id">${c.id}</span></td>
+                        <td style="padding: 12px 16px;">${c.type}</td>
+                        <td style="padding: 12px 16px;"><span class="status-chip ${statusClass}">${c.status}</span></td>
+                        <td style="padding: 12px 16px;">${c.legalEntity}</td>
+                        <td style="padding: 12px 16px;">${c.country}</td>
+                        <td style="padding: 12px 16px;"><span style="color: ${c.riskLevel === 'High' ? '#D32F2F' : c.riskLevel === 'Medium' ? '#F57C00' : '#2E7D32'}; font-weight: 500;">${c.riskLevel}</span></td>
+                        <td style="padding: 12px 16px;">${c.startDate}</td>
+                        <td style="padding: 12px 16px;">${c.startedBeforeHours}</td>
+                        <td style="padding: 12px 16px;"><button class="action-button assign-btn" onclick="assignToMe('${c.id}')">Assign to me</button></td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Apply scrollable class for unassigned table only when needed
+            if (filtered.length > 4) {
+                if (unassignedContainer) unassignedContainer.classList.add('scrollable');
+            } else {
+                if (unassignedContainer) unassignedContainer.classList.remove('scrollable');
+            }
+
+            document.getElementById('unassigned-count').textContent = filtered.length;
+        }
+
+        function renderSLATimer() {
+            const urgentCases = allCases.assigned.filter(c => c.sla === 'breach' || c.sla === 'warning');
+
+            // Sort by breach first (most negative), then warning
+            urgentCases.sort((a, b) => {
+                if (a.sla === 'breach' && b.sla !== 'breach') return -1;
+                if (a.sla !== 'breach' && b.sla === 'breach') return 1;
+                if (a.sla === 'breach' && b.sla === 'breach') return a.slaMinutesLeft - b.slaMinutesLeft;
+                return b.slaMinutesLeft - a.slaMinutesLeft;
+            });
+
+            const html = urgentCases.slice(0, 10).map(c => {
+                const slaColor = c.sla === 'breach' ? '#D32F2F' : '#F57C00';
+                return `
+                    <div class="sla-item">
+                        <div class="sla-item-left">
+                            <div class="sla-item-name">${c.id}</div>
+                            <div class="sla-item-client">${c.client}</div>
+                        </div>
+                        <div class="sla-item-timer" style="color: ${slaColor};">
+                            ${formatSLATimer(c.slaMinutesLeft)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('sla-timer-list').innerHTML = html || '<div style="padding: 12px; color: #999;">No urgent cases</div>';
+        }
+
+        // Log pagination state
+        let currentLogPage = 1;
+        let logLinesPerPage = 7;
+        let logSearchFilter = '';
+
+        function renderRecentUpdates() {
+            // Filter logs by search term
+            const filteredLogs = logs.filter(log => {
+                if (!logSearchFilter) return true;
+                return log.id.toLowerCase().includes(logSearchFilter.toLowerCase());
+            });
+
+            const totalPages = Math.ceil(filteredLogs.length / logLinesPerPage);
+            const startIndex = (currentLogPage - 1) * logLinesPerPage;
+            const endIndex = startIndex + logLinesPerPage;
+            const paginatedLogs = filteredLogs.slice(startIndex, endIndex);
+
+            const html = paginatedLogs.map(log => {
+                // Format timestamp similar to CRM style
+                const timestamp = log.time.replace(' ago', '');
+                return `
+                    <tr>
+                        <td class="log-timestamp-cell">
+                            <span class="log-timestamp-date">30 Jan 13:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}</span>
+                            <span class="log-timestamp-source">CRM</span>
+                        </td>
+                        <td class="log-description-cell">${log.id} - ${log.description}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const tbody = document.querySelector('#recent-updates-list tbody');
+            tbody.innerHTML = html || '<tr><td colspan="2" style="text-align: center; padding: 32px; color: #999;">No activity</td></tr>';
+
+            // Update pagination controls
+            renderLogPagination(totalPages);
+        }
+
+        function renderLogPagination(totalPages) {
+            const container = document.getElementById('logPageNumbers');
+            let html = '<button class="log-page-btn" onclick="changeLogPage(\'prev\')" ' + (currentLogPage === 1 ? 'disabled' : '') + '>&lt;</button>';
+
+            // Show page numbers (max 7 visible)
+            const maxVisible = 7;
+            let startPage = Math.max(1, currentLogPage - Math.floor(maxVisible / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+            if (endPage - startPage < maxVisible - 1) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="log-page-btn ${i === currentLogPage ? 'active' : ''}" onclick="changeLogPage(${i})">${i}</button>`;
+            }
+
+            html += '<button class="log-page-btn" onclick="changeLogPage(\'next\')" ' + (currentLogPage === totalPages ? 'disabled' : '') + '>&gt;</button>';
+            container.innerHTML = html;
+
+            document.getElementById('logGoToPage').max = totalPages;
+            document.getElementById('logGoToPage').value = currentLogPage;
+        }
+
+        function changeLogPage(action) {
+            const filteredLogs = logs.filter(log => {
+                if (!logSearchFilter) return true;
+                return log.id.toLowerCase().includes(logSearchFilter.toLowerCase());
+            });
+            const totalPages = Math.ceil(filteredLogs.length / logLinesPerPage);
+
+            if (action === 'prev' && currentLogPage > 1) {
+                currentLogPage--;
+            } else if (action === 'next' && currentLogPage < totalPages) {
+                currentLogPage++;
+            } else if (typeof action === 'number') {
+                currentLogPage = action;
+            }
+
+            renderRecentUpdates();
+        }
+
+        function handleLogSearch(e) {
+            logSearchFilter = e.target.value;
+            currentLogPage = 1; // Reset to first page when searching
+            renderRecentUpdates();
+        }
+
+
+        function updateKPICounts() {
+            const assigned = allCases.assigned;
+            const allCount = assigned.length;
+            const waitingForReviewCount = assigned.filter(c => c.status === 'Waiting for review').length;
+            const escalationCount = assigned.filter(c => c.status === 'Escalation').length;
+            const pendingCount = assigned.filter(c => c.status === 'Pending').length;
+            const inReviewCount = assigned.filter(c => c.status === 'In review').length;
+            const slaRiskCount = assigned.filter(c => c.stepHours > 7 && c.stepHours <= 10).length;
+            const slaBreachCount = assigned.filter(c => c.stepHours > 10).length;
+
+            document.getElementById('kpi-all').textContent = allCount;
+            document.getElementById('kpi-waiting-for-review').textContent = waitingForReviewCount;
+            document.getElementById('kpi-escalation').textContent = escalationCount;
+            document.getElementById('kpi-pending').textContent = pendingCount;
+            document.getElementById('kpi-in-review').textContent = inReviewCount;
+            document.getElementById('kpi-sla-risk').textContent = slaRiskCount;
+            document.getElementById('kpi-breach').textContent = slaBreachCount;
+        }
+
+        function updateAllViews() {
+            currentPage = 1;  // Reset pagination when filters change
+            updateKPICounts();
+            renderWorkQueue();
+            renderUnassigned();
+            renderSLATimer();
+        }
+
+        // ============================================================================
+        // EVENT HANDLERS
+        // ============================================================================
+        function handleSearch(e) {
+            filters.search = e.target.value;
+            updateAllViews();
+        }
+
+        function handleStatusFilter(e) {
+            filters.status = e.target.value;
+            updateAllViews();
+        }
+
+        function handleTypeFilter(e) {
+            filters.type = e.target.value;
+            updateAllViews();
+        }
+
+        function handleRiskLevelFilter(e) {
+            filters.riskLevel = e.target.value;
+            updateAllViews();
+        }
+
+        function handleCountryFilter(e) {
+            filters.country = e.target.value;
+            updateAllViews();
+        }
+
+        function handleLegalEntityFilter(e) {
+            filters.legalEntity = e.target.value;
+            updateAllViews();
+        }
+
+        function filterByKPI(type, element) {
+            document.querySelectorAll('.kpi-card').forEach(el => el.classList.remove('active'));
+
+            if (filters.kpiFilter === type) {
+                filters.kpiFilter = null;
+            } else {
+                filters.kpiFilter = type;
+                element.classList.add('active');
+            }
+
+            updateAllViews();
+        }
+
+        function resetFilters() {
+            filters.search = '';
+            filters.status = '';
+            filters.type = '';
+            filters.riskLevel = '';
+            filters.country = '';
+            filters.legalEntity = '';
+            filters.kpiFilter = null;
+
+            document.querySelectorAll('.kpi-card').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('input, select').forEach(el => {
+                if (el.tagName === 'INPUT') el.value = '';
+                if (el.tagName === 'SELECT') el.value = '';
+            });
+
+            updateAllViews();
+        }
+
+        function assignToMe(caseId) {
+            const caseData = allCases.unassigned.find(c => c.id === caseId);
+            if (caseData) {
+                allCases.assigned.push(caseData);
+                allCases.unassigned = allCases.unassigned.filter(c => c.id !== caseId);
+                updateAllViews();
+            }
+        }
+
+        // ============================================================================
+        // INITIALIZE
+        // ============================================================================
+        // Sidebar menu expand/collapse
+        document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+            if (item.querySelector('.submenu')) {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    item.classList.toggle('expanded');
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkQueue();
+            renderUnassigned();
+            renderRecentUpdates();
+
+            // Event listeners for log pagination
+            document.getElementById('logLinesPerPage').addEventListener('change', (e) => {
+                logLinesPerPage = parseInt(e.target.value);
+                currentLogPage = 1;
+                renderRecentUpdates();
+            });
+
+            document.getElementById('logGoToPage').addEventListener('change', (e) => {
+                const totalPages = Math.ceil(logs.length / logLinesPerPage);
+                const page = parseInt(e.target.value);
+                if (page >= 1 && page <= totalPages) {
+                    currentLogPage = page;
+                    renderRecentUpdates();
+                }
+            });
+
+            // Manager view filter listeners
+            document.querySelectorAll('#manager-view .mgr-filter-group select').forEach(sel => {
+                sel.addEventListener('change', updateManagerStats);
+            });
+            updateManagerStats();
+        });
+
+        // ============================================================================
+        // ============================================================================
+        // MANAGER VIEW – reactive stats
+        // ============================================================================
+        const SLA_THRESHOLDS = { high: 168, medium: 288, low: 432 };
+
+        function fmtH(h) {
+            if (h >= 48) return Math.round(h / 24) + 'd';
+            return Math.round(h) + 'h';
+        }
+
+        function getSLAStatus(c) {
+            var thr = SLA_THRESHOLDS[c.risk] || 288;
+            if (c.ageHours > thr)       return 'breached';
+            if (c.ageHours > thr * 0.8) return 'atRisk';
+            return 'ok';
+        }
+
+        function applyActionFilter(action) {
+            var selects = document.querySelectorAll('#manager-view .mgr-filter-group select');
+            selects.forEach(function(s) { s.value = 'all'; });
+            if (action === 'breach' || action === 'aging') {
+                selects[7].value = 'high';
+            }
+            updateManagerStats();
+            document.getElementById('mgr-officer-table-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updateManagerStats() {
+            var selects = document.querySelectorAll('#manager-view .mgr-filter-group select');
+            var fYear = selects[0].value, fMonth = selects[1].value, fOfficer = selects[2].value;
+            var fType = selects[3].value, fStatus = selects[4].value, fLE = selects[5].value;
+            var fCountry = selects[6].value, fRisk = selects[7].value;
+
+            var statusMap  = {waiting:'Waiting for review',escalation:'Escalation',inreview:'In review',pending:'Pending',rejected:'Rejected',kycpassed:'KYC passed',funded:'Funded'};
+            var typeMap    = {individual:'Individual',corporate:'Corporate',financial:'Financial Institution'};
+            var officerNum = fOfficer !== 'all' ? 'Officer ' + fOfficer.replace('officer','') : null;
+
+            var filtered = mgrCases.filter(function(c) {
+                if (fYear !== 'all' && c.year !== fYear) return false;
+                if (fMonth !== 'all' && c.month !== fMonth) return false;
+                if (officerNum && c.officer !== officerNum) return false;
+                if (fType !== 'all' && c.type !== typeMap[fType]) return false;
+                if (fStatus !== 'all' && c.status !== statusMap[fStatus]) return false;
+                if (fLE !== 'all' && c.le !== fLE) return false;
+                if (fCountry !== 'all' && c.region !== fCountry) return false;
+                if (fRisk !== 'all' && c.risk !== fRisk) return false;
+                return true;
+            });
+            var total = filtered.length;
+
+            // ── KPI Strip ──────────────────────────────────
+            var breachedCount = 0, atRiskCount = 0, totalAge = 0, breaches7d = 0;
+            filtered.forEach(function(c) {
+                var sla = getSLAStatus(c);
+                if (sla === 'breached') { breachedCount++; if (c.createdDaysAgo <= 7) breaches7d++; }
+                if (sla === 'atRisk')   atRiskCount++;
+                totalAge += c.ageHours;
+            });
+            var compliancePct = total > 0 ? Math.round((total - breachedCount) / total * 100) : 100;
+            var avgAge        = total > 0 ? Math.round(totalAge / total) : 0;
+
+            var compEl = document.getElementById('mgr-kpi-compliance');
+            compEl.textContent = compliancePct + '%';
+            compEl.className   = 'mgr-kpi-value' + (compliancePct >= 85 ? ' mgr-val-green' : ' mgr-val-amber');
+            document.getElementById('mgr-kpi-at-risk').textContent  = atRiskCount;
+            document.getElementById('mgr-kpi-breaches').textContent = breaches7d;
+            document.getElementById('mgr-kpi-avg-time').textContent = fmtH(avgAge);
+
+            // ── Avg Processing Time by Risk ──────────────────────
+            var riskKeys = ['high', 'medium', 'low'];
+            var riskIds  = ['mgr-risk-bar-high', 'mgr-risk-bar-medium', 'mgr-risk-bar-low'];
+            var riskAvgs = riskKeys.map(function(r) {
+                var arr = filtered.filter(function(c) { return c.risk === r; });
+                return arr.length > 0 ? Math.round(arr.reduce(function(s,c) { return s + c.ageHours; }, 0) / arr.length) : 0;
+            });
+            var maxRiskAvg = Math.max.apply(null, riskAvgs.concat([1]));
+            riskIds.forEach(function(id, i) {
+                var el = document.getElementById(id);
+                if (!el) return;
+                el.querySelector('.bar-fill').style.width  = ((riskAvgs[i] / maxRiskAvg) * 100) + '%';
+                el.querySelector('.bar-value').textContent  = fmtH(riskAvgs[i]);
+                var marker = el.querySelector('.mgr-threshold-marker');
+                if (marker) {
+                    var markerPct = (SLA_THRESHOLDS[riskKeys[i]] / maxRiskAvg) * 100;
+                    marker.style.left    = Math.min(markerPct, 100) + '%';
+                    marker.style.display = 'block';
+                }
+            });
+
+            // ── Delays by Category (at-risk + breached only) ────────────────
+            var atRiskOrBreached = filtered.filter(function(c) { return getSLAStatus(c) !== 'ok'; });
+            var delayCounts = { Officer: 0, Compliance: 0, Client: 0, External: 0 };
+            atRiskOrBreached.forEach(function(c) { delayCounts[c.delayCategory]++; });
+            var delayTotal = atRiskOrBreached.length || 1;
+            ['Officer', 'Compliance', 'Client', 'External'].forEach(function(cat, i) {
+                var el = document.getElementById('mgr-delay-bar-' + i);
+                if (!el) return;
+                el.querySelector('.bar-fill').style.width  = ((delayCounts[cat] / delayTotal) * 100) + '%';
+                el.querySelector('.bar-value').textContent  = delayCounts[cat];
+            });
+
+            // ── SLA Breach Trend ─────────────────────────────────
+            var trend = { b7:0, r7:0, o7:0, b30:0, r30:0, o30:0 };
+            filtered.forEach(function(c) {
+                var sla = getSLAStatus(c);
+                if (c.createdDaysAgo <= 7) {
+                    if (sla === 'breached') trend.b7++;
+                    else if (sla === 'atRisk') trend.r7++;
+                    else trend.o7++;
+                }
+                if (c.createdDaysAgo <= 30) {
+                    if (sla === 'breached') trend.b30++;
+                    else if (sla === 'atRisk') trend.r30++;
+                    else trend.o30++;
+                }
+            });
+            document.getElementById('mgr-trend-7-breach').textContent  = trend.b7;
+            document.getElementById('mgr-trend-7-risk').textContent    = trend.r7;
+            document.getElementById('mgr-trend-7-res').textContent     = trend.o7;
+            document.getElementById('mgr-trend-30-breach').textContent = trend.b30;
+            document.getElementById('mgr-trend-30-risk').textContent   = trend.r30;
+            document.getElementById('mgr-trend-30-res').textContent    = trend.o30;
+
+            // ── Officer Performance Table ───────────────────────────
+            var officers = ['Officer 1','Officer 2','Officer 3','Officer 4','Officer 5','Officer 6','Officer 7','Officer 8'];
+            var officerRows = officers.map(function(name) {
+                var cases  = filtered.filter(function(c) { return c.officer === name; });
+                var active = cases.length;
+                var breached = 0, atRisk = 0, maxAge = 0, sumAge = 0;
+                cases.forEach(function(c) {
+                    var sla = getSLAStatus(c);
+                    if (sla === 'breached') breached++;
+                    if (sla === 'atRisk')   atRisk++;
+                    if (c.ageHours > maxAge) maxAge = c.ageHours;
+                    sumAge += c.ageHours;
+                });
+                return {
+                    name: name, active: active, breached: breached,
+                    slaRiskPct: active > 0 ? Math.round((breached + atRisk) / active * 100) : 0,
+                    avgTime:    active > 0 ? Math.round(sumAge / active) : 0,
+                    maxAge:     maxAge
+                };
+            });
+
+            // Compute status flags
+            var activeOfficers = officerRows.filter(function(o) { return o.active > 0; });
+            var avgActive = activeOfficers.length > 0 ? filtered.length / activeOfficers.length : 0;
+            officerRows.forEach(function(o) {
+                if (o.active === 0)                          o.flag = 'OK';
+                else if (o.active > avgActive * 1.3)         o.flag = 'Overloaded';
+                else if (o.breached > 1 || o.slaRiskPct > 25) o.flag = 'At Risk';
+                else                                         o.flag = 'OK';
+            });
+
+            // Render officer tbody
+            var tbody = document.getElementById('mgr-officer-tbody');
+            if (tbody) {
+                tbody.innerHTML = officerRows.map(function(o) {
+                    var fc = o.flag === 'OK' ? 'mgr-flag-ok' : o.flag === 'At Risk' ? 'mgr-flag-risk' : 'mgr-flag-overloaded';
+                    return '<tr>' +
+                        '<td>' + o.name + '</td>' +
+                        '<td>' + o.active + '</td>' +
+                        '<td>' + o.slaRiskPct + '%</td>' +
+                        '<td>' + fmtH(o.avgTime) + '</td>' +
+                        '<td>' + fmtH(o.maxAge) + '</td>' +
+                        '<td><span class="' + fc + '">' + o.flag + '</span></td>' +
+                    '</tr>';
+                }).join('');
+            }
+
+            // Render officer tfoot
+            var tfoot = document.getElementById('mgr-officer-tfoot');
+            if (tfoot) {
+                var totalActive     = officerRows.reduce(function(s,o) { return s + o.active; }, 0);
+                var allAtRiskCount  = filtered.filter(function(c) { return getSLAStatus(c) !== 'ok'; }).length;
+                var totalSlaRiskPct = totalActive > 0 ? Math.round(allAtRiskCount / totalActive * 100) : 0;
+                var allAvgAge       = totalActive > 0 ? Math.round(totalAge / totalActive) : 0;
+                var allMaxAge       = filtered.reduce(function(m,c) { return Math.max(m, c.ageHours); }, 0);
+                tfoot.innerHTML = '<tr>' +
+                    '<td>Team Total</td>' +
+                    '<td>' + totalActive + '</td>' +
+                    '<td>' + totalSlaRiskPct + '%</td>' +
+                    '<td>' + fmtH(allAvgAge) + '</td>' +
+                    '<td>' + fmtH(allMaxAge) + '</td>' +
+                    '<td></td>' +
+                '</tr>';
+            }
+
+            // ── Action Items ───────────────────────────────────
+            document.getElementById('mgr-action-breach-count').textContent   = breachedCount;
+            document.getElementById('mgr-action-overload-count').textContent = officerRows.filter(function(o) { return o.flag === 'Overloaded'; }).length;
+            document.getElementById('mgr-action-aging-count').textContent    = filtered.filter(function(c) { return c.risk === 'high' && getSLAStatus(c) === 'breached'; }).length;
+        }
+
+        // ============================================================================
+        // MANAGER FILTER FUNCTIONS
+        // ============================================================================
+        function applyManagerFilters() {
+            var officerFilter = document.getElementById('mgr-filter-officer').value;
+            var periodFilter = document.getElementById('mgr-filter-period').value;
+
+            // Get all rows in the Assignee table
+            var rows = document.querySelectorAll('#mgr-assignee-tbody tr');
+            var visibleCount = 0;
+            var totals = { escalation: 0, pending: 0, rmPending: 0, waiting: 0, inReview: 0, total: 0 };
+
+            rows.forEach(function(row) {
+                var officer = row.getAttribute('data-officer');
+                var show = true;
+
+                // Filter by officer
+                if (officerFilter !== 'all' && officer !== officerFilter) {
+                    show = false;
+                }
+
+                // Show/hide row
+                row.style.display = show ? '' : 'none';
+
+                // Calculate totals for visible rows
+                if (show) {
+                    visibleCount++;
+                    var cells = row.querySelectorAll('td');
+                    totals.escalation += parseInt(cells[1].textContent) || 0;
+                    totals.pending += parseInt(cells[2].textContent) || 0;
+                    totals.rmPending += parseInt(cells[3].textContent) || 0;
+                    totals.waiting += parseInt(cells[4].textContent) || 0;
+                    totals.inReview += parseInt(cells[5].textContent) || 0;
+                    totals.total += parseInt(cells[6].textContent) || 0;
+                }
+            });
+
+            // Update totals row
+            var tfootCells = document.querySelectorAll('#mgr-assignee-table tfoot td');
+            if (tfootCells.length >= 7) {
+                tfootCells[1].textContent = totals.escalation;
+                tfootCells[2].textContent = totals.pending;
+                tfootCells[3].textContent = totals.rmPending;
+                tfootCells[4].textContent = totals.waiting;
+                tfootCells[5].textContent = totals.inReview;
+                tfootCells[6].textContent = totals.total;
+            }
+
+            // Update footer text
+            var footer = document.querySelector('.mgr-matrix-footer span:last-child');
+            if (footer) {
+                footer.textContent = 'Showing ' + visibleCount + ' of 8 officers.';
+            }
+        }
+
+        function switchView(view) {
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            if (view === 'officer') {
+                document.getElementById('officer-view').classList.remove('hidden');
+                document.getElementById('manager-view').classList.remove('active');
+                document.querySelector('.view-btn:first-child').classList.add('active');
+            } else {
+                document.getElementById('officer-view').classList.add('hidden');
+                document.getElementById('manager-view').classList.add('active');
+                document.querySelector('.view-btn:last-child').classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
