@@ -2382,16 +2382,16 @@
                     </div>
                     <div class="table-container unassigned-container">
                         <table id="unassigned-table-body" style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                            <thead>
+                            <thead id="unassigned-table-thead">
                                 <tr>
-                                    <th>INFO</th>
-                                    <th>CORP/INDIVIDUAL</th>
-                                    <th>ONBOARDING STATE</th>
-                                    <th>LEGAL ENTITY</th>
-                                    <th>RESIDENCE</th>
-                                    <th>RISK LEVEL</th>
-                                    <th>START DATE</th>
-                                    <th>STARTED BEFORE, HRS</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('client')">INFO</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('type')">CORP/INDIVIDUAL</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('status')">ONBOARDING STATE</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('legalEntity')">LEGAL ENTITY</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('country')">RESIDENCE</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('riskLevel')">RISK LEVEL</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('startDate')">START DATE</th>
+                                    <th class="sortable" onclick="sortUnassignedTable('startedBeforeHours')">STARTED BEFORE, HRS</th>
                                     <th>ACTION</th>
                                 </tr>
                             </thead>
@@ -2750,6 +2750,10 @@
         let sortColumn = null;
         let sortDirection = 'asc';
 
+        // Unassigned table sort state
+        let unassignedSortColumn = null;
+        let unassignedSortDirection = 'asc';
+
         // Log data structure
         const logs = [
             { id: '9261', action: 'uploaded', description: 'Uploaded KYC documents', time: '2m ago', category: 'Document' },
@@ -2853,6 +2857,21 @@
             currentPage = 1;
             renderTableHeaders();
             renderWorkQueue();
+        }
+
+        function sortUnassignedTable(column) {
+            // Toggle sort direction if clicking same column
+            if (unassignedSortColumn === column) {
+                unassignedSortDirection = unassignedSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                unassignedSortColumn = column;
+                unassignedSortDirection = 'asc';
+            }
+
+            // Reset to first page when sorting
+            unassignedCurrentPage = 1;
+            renderUnassignedHeaders();
+            renderUnassigned();
         }
 
         function sortCases(cases, column, direction) {
@@ -3009,6 +3028,28 @@
             }).join('')}</tr>`;
         }
 
+        function renderUnassignedHeaders() {
+            const thead = document.getElementById('unassigned-table-thead');
+            const columns = [
+                { field: 'client', label: 'INFO' },
+                { field: 'type', label: 'CORP/INDIVIDUAL' },
+                { field: 'status', label: 'ONBOARDING STATE' },
+                { field: 'legalEntity', label: 'LEGAL ENTITY' },
+                { field: 'country', label: 'RESIDENCE' },
+                { field: 'riskLevel', label: 'RISK LEVEL' },
+                { field: 'startDate', label: 'START DATE' },
+                { field: 'startedBeforeHours', label: 'STARTED BEFORE, HRS' }
+            ];
+
+            thead.innerHTML = `<tr>${columns.map(col => {
+                let sortClass = 'sortable';
+                if (unassignedSortColumn === col.field) {
+                    sortClass += unassignedSortDirection === 'asc' ? ' sorted-asc' : ' sorted-desc';
+                }
+                return `<th class="${sortClass}" onclick="sortUnassignedTable('${col.field}')">${col.label}</th>`;
+            }).join('')}<th>ACTION</th></tr>`;
+        }
+
         // Country code to flag emoji mapping
         function getCountryFlag(countryCode) {
             const flags = {
@@ -3162,7 +3203,7 @@
         }
 
         function renderUnassigned() {
-            const filtered = allCases.unassigned.filter(matchesFilters);
+            let filtered = allCases.unassigned.filter(matchesFilters);
             const tbody = document.querySelector('#unassigned-table-body tbody');
             const unassignedContainer = document.querySelector('.unassigned-container');
 
@@ -3171,6 +3212,11 @@
                 document.getElementById('unassigned-count').textContent = '0';
                 updateUnassignedPaginationControls(1, 1);
                 return;
+            }
+
+            // Apply sorting if a column is selected
+            if (unassignedSortColumn) {
+                filtered = sortCases(filtered, unassignedSortColumn, unassignedSortDirection);
             }
 
             // Calculate pagination
@@ -3492,6 +3538,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderTableHeaders();
             renderWorkQueue();
+            renderUnassignedHeaders();
             renderUnassigned();
             renderRecentUpdates();
 
