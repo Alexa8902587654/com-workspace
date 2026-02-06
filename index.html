@@ -626,6 +626,44 @@
             color: #2E7D32;
         }
 
+        /* Info Cell Styles */
+        .info-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            line-height: 1.4;
+        }
+        .info-name {
+            font-weight: 600;
+            color: #222;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #666;
+            color: #FFF;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: lowercase;
+        }
+        .info-phone {
+            font-size: 12px;
+            color: #555;
+        }
+        .info-email a {
+            font-size: 12px;
+            color: #2E7D32;
+            text-decoration: none;
+        }
+        .info-email a:hover {
+            text-decoration: underline;
+        }
+
         .status-chip {
             display: inline-flex;
             align-items: center;
@@ -665,6 +703,123 @@
         .action-button:disabled {
             background: #E0E0E0;
             cursor: not-allowed;
+        }
+
+        /* Column Settings */
+        .table-header-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background: #FAFAFA;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .table-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .table-header-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+        .column-settings-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .column-settings-btn:hover {
+            background: #F0F0F0;
+            color: #333;
+        }
+        .column-settings-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .column-settings-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 280px;
+            background: #FFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .column-settings-dropdown.open {
+            display: block;
+        }
+        .column-settings-header {
+            padding: 12px 14px;
+            border-bottom: 1px solid #E5E5E5;
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .column-settings-reset {
+            font-size: 11px;
+            color: #2E7D32;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .column-settings-reset:hover {
+            text-decoration: underline;
+        }
+        .column-settings-list {
+            padding: 8px 0;
+        }
+        .column-settings-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            cursor: grab;
+            user-select: none;
+            transition: background 0.1s ease;
+        }
+        .column-settings-item:hover {
+            background: #F5F5F5;
+        }
+        .column-settings-item.dragging {
+            background: #E8F5E9;
+            opacity: 0.8;
+        }
+        .column-settings-item.drag-over {
+            border-top: 2px solid #2E7D32;
+        }
+        .column-drag-handle {
+            color: #BBB;
+            cursor: grab;
+            font-size: 14px;
+        }
+        .column-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #2E7D32;
+            cursor: pointer;
+        }
+        .column-label {
+            flex: 1;
+            font-size: 12px;
+            color: #333;
+        }
+        .column-settings-wrapper {
+            position: relative;
         }
 
         /* SIDEBAR PANELS - EXANTE Style */
@@ -1009,42 +1164,102 @@
             padding: 12px 16px;
             background: #FAFAFA;
             border-top: 1px solid #E5E5E5;
-            font-size: 12px;
-            color: #666;
+            font-size: 13px;
+            color: #333;
         }
-
-        .pagination-buttons {
+        .pagination-left {
             display: flex;
-            gap: 4px;
             align-items: center;
+            gap: 8px;
         }
-
-        .pagination-btn {
-            padding: 6px 12px;
+        .pagination-left span {
+            font-weight: 600;
+            color: #333;
+        }
+        .pagination-select {
+            padding: 6px 28px 6px 10px;
             border: 1px solid #E0E0E0;
-            background: #FFFFFF;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+            background: #FFF;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        .pagination-center {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .pagination-nav-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #E0E0E0;
+            background: #FFF;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 14px;
             color: #666;
-            font-weight: 400;
             transition: all 0.15s ease;
         }
-
-        .pagination-btn:hover:not(:disabled) {
+        .pagination-nav-btn:hover:not(:disabled) {
             border-color: #2E7D32;
             color: #2E7D32;
         }
-
-        .pagination-btn:disabled {
+        .pagination-nav-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
-
-        .pagination-info {
-            font-size: 12px;
-            color: #888;
-            font-weight: 400;
+        .pagination-page-btn {
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #E0E0E0;
+            background: #FFF;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+        .pagination-page-btn:hover {
+            border-color: #2E7D32;
+            color: #2E7D32;
+        }
+        .pagination-page-btn.active {
+            background: #F0F0F0;
+            border-color: #CCC;
+        }
+        .pagination-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pagination-right span {
+            font-weight: 600;
+            color: #333;
+        }
+        .pagination-goto-input {
+            width: 50px;
+            padding: 6px 10px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+            text-align: center;
+        }
+        .pagination-goto-input:focus {
+            outline: none;
+            border-color: #2E7D32;
         }
 
         .page-numbers {
@@ -2003,7 +2218,7 @@
                     </div>
                     <div style="min-width: 135px; flex-shrink: 0;">
                         <select class="filter-select" onchange="handleStatusFilter(event)">
-                            <option value="">Status</option>
+                            <option value="">Onboarding State</option>
                             <option value="Waiting for review">Waiting for review</option>
                             <option value="Escalation">Escalation</option>
                             <option value="In review">In review</option>
@@ -2099,30 +2314,61 @@
                 <div class="content-wrapper">
                     <!-- MAIN WORK QUEUE -->
                     <div class="work-queue">
+                        <div class="table-header-controls">
+                            <div class="table-header-left">
+                                <span class="table-header-title">Applications</span>
+                            </div>
+                            <div class="column-settings-wrapper">
+                                <button class="column-settings-btn" onclick="toggleColumnSettings()" title="Customize columns">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                        <circle cx="5" cy="6" r="1.5"/>
+                                        <rect x="9" y="5" width="11" height="2" rx="1"/>
+                                        <circle cx="5" cy="12" r="1.5"/>
+                                        <rect x="9" y="11" width="11" height="2" rx="1"/>
+                                        <circle cx="5" cy="18" r="1.5"/>
+                                        <rect x="9" y="17" width="11" height="2" rx="1"/>
+                                    </svg>
+                                </button>
+                                <div class="column-settings-dropdown" id="column-settings-dropdown">
+                                    <div class="column-settings-header">
+                                        <span>Customize Columns</span>
+                                        <span class="column-settings-reset" onclick="resetColumns()">Reset</span>
+                                    </div>
+                                    <div class="column-settings-list" id="column-settings-list">
+                                        <!-- Will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-container">
                             <table id="work-queue-table-body" style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                                <thead>
+                                <thead id="work-queue-thead">
                                     <tr>
-                                        <th>CLIENT APPLICATION ID</th>
-                                        <th class="sortable" onclick="sortTable('type')">TYPE</th>
-                                        <th class="sortable" onclick="sortTable('status')">STATUS</th>
-                                        <th class="sortable" onclick="sortTable('legalEntity')">LEGAL ENTITY</th>
-                                        <th class="sortable" onclick="sortTable('country')">COUNTRY</th>
-                                        <th class="sortable" onclick="sortTable('riskLevel')">RISK LEVEL</th>
-                                        <th class="sortable" onclick="sortTable('startDate')">ONB START DATE</th>
-                                        <th class="sortable" onclick="sortTable('startedBeforeHours')">ONB STARTED, HRS</th>
-                                        <th class="sortable" onclick="sortTable('lastStepDate')">LAST STEP DATE</th>
-                                        <th class="sortable" onclick="sortTable('stepHours')">LAST STEP, HRS</th>
+                                        <!-- Will be populated by JavaScript based on column config -->
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>
                         </div>
                         <div class="pagination-controls">
-                            <span class="pagination-info">Showing <span id="rows-showing">10</span> of <span id="total-rows">15</span> cases • Page <span id="current-page">1</span> of <span id="total-pages">2</span></span>
-                            <div class="pagination-buttons">
-                                <button class="pagination-btn" onclick="previousPage()" id="prev-btn">← Previous</button>
-                                <button class="pagination-btn" onclick="nextPage()" id="next-btn">Next →</button>
+                            <div class="pagination-left">
+                                <span>Lines per page</span>
+                                <select class="pagination-select" id="lines-per-page" onchange="changeRowsPerPage(this.value)">
+                                    <option value="10">10</option>
+                                    <option value="13" selected>13</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                            <div class="pagination-center" id="pagination-numbers">
+                                <button class="pagination-nav-btn" onclick="previousPage()" id="prev-btn">&lt;</button>
+                                <button class="pagination-page-btn active">1</button>
+                                <button class="pagination-page-btn">2</button>
+                                <button class="pagination-nav-btn" onclick="nextPage()" id="next-btn">&gt;</button>
+                            </div>
+                            <div class="pagination-right">
+                                <span>Go to page</span>
+                                <input type="number" class="pagination-goto-input" id="goto-page" min="1" value="1" onchange="goToPage(this.value)">
                             </div>
                         </div>
                     </div>
@@ -2138,11 +2384,11 @@
                         <table id="unassigned-table-body" style="width: 100%; border-collapse: collapse; font-size: 13px;">
                             <thead>
                                 <tr>
-                                    <th>CLIENT APPLICATION ID</th>
-                                    <th>TYPE</th>
-                                    <th>STATUS</th>
+                                    <th>INFO</th>
+                                    <th>CORP/INDIVIDUAL</th>
+                                    <th>ONBOARDING STATE</th>
                                     <th>LEGAL ENTITY</th>
-                                    <th>COUNTRY</th>
+                                    <th>RESIDENCE</th>
                                     <th>RISK LEVEL</th>
                                     <th>START DATE</th>
                                     <th>STARTED BEFORE, HRS</th>
@@ -2152,40 +2398,24 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                </div>
-
-                <!-- ACTIVITY LOG SECTION -->
-                <div class="work-queue" style="margin-top: 24px;">
-                    <div class="queue-header">
-                        <span class="queue-title">Activity Log</span>
-                        <div class="search-box" style="width: 200px;">
-                            <input type="text" placeholder="Search by ID" id="logSearchInput" oninput="handleLogSearch(event)">
-                        </div>
-                    </div>
-                    <div class="logs-container" style="max-height: 400px; overflow-y: auto;">
-                        <table class="log-table" id="recent-updates-list">
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="log-pagination">
-                        <div class="log-pagination-left">
+                    <div class="pagination-controls">
+                        <div class="pagination-left">
                             <span>Lines per page</span>
-                            <select class="log-pagination-select" id="logLinesPerPage">
+                            <select class="pagination-select" id="unassigned-lines-per-page" onchange="changeUnassignedRowsPerPage(this.value)">
                                 <option value="5">5</option>
                                 <option value="7" selected>7</option>
                                 <option value="10">10</option>
-                                <option value="15">15</option>
                                 <option value="20">20</option>
                             </select>
                         </div>
-                        <div class="log-pagination-center" id="logPageNumbers">
-                            <button class="log-page-btn" onclick="changeLogPage('prev')">&lt;</button>
-                            <button class="log-page-btn active">1</button>
-                            <button class="log-page-btn" onclick="changeLogPage('next')">&gt;</button>
+                        <div class="pagination-center" id="unassigned-pagination-numbers">
+                            <button class="pagination-nav-btn" onclick="previousUnassignedPage()" id="unassigned-prev-btn">&lt;</button>
+                            <button class="pagination-page-btn active">1</button>
+                            <button class="pagination-nav-btn" onclick="nextUnassignedPage()" id="unassigned-next-btn">&gt;</button>
                         </div>
-                        <div class="log-pagination-right">
+                        <div class="pagination-right">
                             <span>Go to page</span>
-                            <input type="number" class="log-page-input" id="logGoToPage" min="1" value="1">
+                            <input type="number" class="pagination-goto-input" id="unassigned-goto-page" min="1" value="1" onchange="goToUnassignedPage(this.value)">
                         </div>
                     </div>
                 </div>
@@ -2194,105 +2424,6 @@
 
                 <!-- MANAGER VIEW -->
                 <div class="manager-view" id="manager-view">
-
-                    <!-- MANAGER FILTER BAR -->
-                    <div class="mgr-filter-bar">
-                        <div class="mgr-filter-group">
-                            <label>Created Year</label>
-                            <select id="mgr-filter-year" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Created Month</label>
-                            <select id="mgr-filter-month" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="jan">Jan</option>
-                                <option value="feb">Feb</option>
-                                <option value="dec">Dec</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Onboarding Officer</label>
-                            <select id="mgr-filter-officer" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="Officer 1">Officer 1</option>
-                                <option value="Officer 2">Officer 2</option>
-                                <option value="Officer 3">Officer 3</option>
-                                <option value="Officer 4">Officer 4</option>
-                                <option value="Officer 5">Officer 5</option>
-                                <option value="Officer 6">Officer 6</option>
-                                <option value="Officer 7">Officer 7</option>
-                                <option value="Officer 8">Officer 8</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Client Type</label>
-                            <select id="mgr-filter-type" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="individual">Individual</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="financial">Financial Institution</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Status</label>
-                            <select id="mgr-filter-status" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="waiting">Waiting for review</option>
-                                <option value="escalation">Escalation</option>
-                                <option value="inreview">In review</option>
-                                <option value="pending">Pending</option>
-                                <option value="rejected">Rejected</option>
-                                <option value="kycpassed">KYC passed</option>
-                                <option value="funded">Funded</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Legal Entity</label>
-                            <select id="mgr-filter-entity" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="ext">EXT</option>
-                                <option value="nob">NOB</option>
-                                <option value="xnt">XNT</option>
-                                <option value="cfsc">CFSC</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Country</label>
-                            <select id="mgr-filter-country" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="europe">Europe</option>
-                                <option value="asia">Asia &amp; Pacific</option>
-                                <option value="namerica">North America</option>
-                                <option value="samerica">South America</option>
-                                <option value="africa">Africa</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Risk Level</label>
-                            <select id="mgr-filter-risk" onchange="applyManagerFilters()">
-                                <option value="all">All</option>
-                                <option value="low">Low</option>
-                                <option value="medium">Medium</option>
-                                <option value="high">High</option>
-                            </select>
-                        </div>
-                        <div class="mgr-filter-group">
-                            <label>Period</label>
-                            <select id="mgr-filter-period" onchange="applyManagerFilters()">
-                                <option value="all">All Time</option>
-                                <option value="today">Today</option>
-                                <option value="7d" selected>Last 7 Days</option>
-                                <option value="30d">Last 30 Days</option>
-                                <option value="mtd">Month to Date</option>
-                                <option value="qtd">Quarter to Date</option>
-                                <option value="ytd">Year to Date</option>
-                            </select>
-                        </div>
-                    </div>
 
                     <!-- MANAGER DASHBOARD LAYOUT - COMPACT -->
 
@@ -2435,10 +2566,9 @@
                             <thead>
                                 <tr>
                                     <th>Risk</th>
-                                    <th class="num">Cases</th>
-                                    <th class="num">Avg Time</th>
+                                    <th class="num">Active Applications</th>
+                                    <th class="num">Average Review Time</th>
                                     <th class="num">SLA</th>
-                                    <th class="bar-cell">% Used</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -2447,100 +2577,18 @@
                                     <td class="num cases-cell">44</td>
                                     <td class="num time-cell">2.8d</td>
                                     <td class="num sla-cell">5d</td>
-                                    <td class="bar-cell">
-                                        <div class="mgr-sla-inline-bar">
-                                            <div class="mgr-sla-inline-track">
-                                                <div class="mgr-sla-inline-fill good" style="width: 56%;"></div>
-                                            </div>
-                                            <span class="mgr-sla-inline-pct">56%</span>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="risk-cell risk-medium">Medium</td>
                                     <td class="num cases-cell">96</td>
                                     <td class="num time-cell">8.2d</td>
                                     <td class="num sla-cell">10d</td>
-                                    <td class="bar-cell">
-                                        <div class="mgr-sla-inline-bar">
-                                            <div class="mgr-sla-inline-track">
-                                                <div class="mgr-sla-inline-fill warning" style="width: 82%;"></div>
-                                            </div>
-                                            <span class="mgr-sla-inline-pct">82%</span>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="row-breached">
                                     <td class="risk-cell risk-high">High</td>
                                     <td class="num cases-cell">52</td>
                                     <td class="num time-cell">16.1d</td>
                                     <td class="num sla-cell">15d</td>
-                                    <td class="bar-cell">
-                                        <div class="mgr-sla-inline-bar">
-                                            <div class="mgr-sla-inline-track">
-                                                <div class="mgr-sla-inline-fill breach" style="width: 100%;"></div>
-                                            </div>
-                                            <span class="mgr-sla-inline-pct">107%</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- ROW 3: Unassigned Applications Table -->
-                    <div class="mgr-unassigned-container">
-                        <div class="mgr-unassigned-header">
-                            <span class="mgr-unassigned-title">Unassigned</span>
-                            <span class="mgr-unassigned-count">3</span>
-                        </div>
-                        <table class="mgr-unassigned-table">
-                            <thead>
-                                <tr>
-                                    <th>Client Application ID</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Legal Entity</th>
-                                    <th>Country</th>
-                                    <th>Risk Level</th>
-                                    <th>Start Date</th>
-                                    <th class="num">Started Before, Hrs</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="app-id">5028</td>
-                                    <td>Individual</td>
-                                    <td><span class="status-badge escalation">Escalation</span></td>
-                                    <td>XNT</td>
-                                    <td>NO</td>
-                                    <td class="risk-low">Low</td>
-                                    <td>2026-01-19</td>
-                                    <td class="num">80</td>
-                                    <td><button class="mgr-assign-btn">Assign to</button></td>
-                                </tr>
-                                <tr>
-                                    <td class="app-id">4600</td>
-                                    <td>Corporate</td>
-                                    <td><span class="status-badge pending">Pending</span></td>
-                                    <td>EXT</td>
-                                    <td>BE</td>
-                                    <td class="risk-medium">Medium</td>
-                                    <td>2026-01-20</td>
-                                    <td class="num">60</td>
-                                    <td><button class="mgr-assign-btn">Assign to</button></td>
-                                </tr>
-                                <tr>
-                                    <td class="app-id">7123</td>
-                                    <td>Individual</td>
-                                    <td><span class="status-badge pending">Pending</span></td>
-                                    <td>NOB</td>
-                                    <td>DK</td>
-                                    <td class="risk-low">Low</td>
-                                    <td>2026-01-22</td>
-                                    <td class="num">40</td>
-                                    <td><button class="mgr-assign-btn">Assign to</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2558,26 +2606,38 @@
         // ============================================================================
         const allCases = {
             assigned: [
-                { id: '8861', client: 'John Smith', type: 'Individual', stage: 'Review', status: 'Pending', legalEntity: 'XNT', country: 'GB', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 48, lastStepDate: '2026-01-28', stepHours: 12, sla: 'normal', slaMinutesLeft: 240, blocked: false, escalated: true, owner: true, assignee: 'A. Badrova', am: 'M. Johnson', createdDate: '2026-01-20' },
-                { id: '9261', client: 'Jane Doe', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'EXT', country: 'US', riskLevel: 'Low', startDate: '2026-01-18', startedBeforeHours: 96, lastStepDate: '2026-01-30', stepHours: 2, sla: 'breach', slaMinutesLeft: -117, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'S. Williams', createdDate: '2026-01-18' },
-                { id: '8829', client: 'Acme Corp', type: 'Corporate', stage: 'Under Review', status: 'In review', legalEntity: 'NOB', country: 'DE', riskLevel: 'High', startDate: '2026-01-19', startedBeforeHours: 72, lastStepDate: '2026-01-29', stepHours: 8, sla: 'breach', slaMinutesLeft: -57, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'J. Davis', createdDate: '2026-01-19' },
-                { id: '4846', client: 'Tech Ventures Ltd', type: 'Corporate', stage: 'Pending ONBA', status: 'Waiting for review', legalEntity: 'XNT', country: 'SG', riskLevel: 'Medium', startDate: '2026-01-22', startedBeforeHours: 24, lastStepDate: '2026-01-29', stepHours: 6, sla: 'normal', slaMinutesLeft: 228, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'R. Miller', createdDate: '2026-01-22' },
-                { id: '3933', client: 'Global Solutions', type: 'Financial Institution', stage: 'Under Review', status: 'Pending', legalEntity: 'EXT', country: 'FR', riskLevel: 'High', startDate: '2026-01-21', startedBeforeHours: 36, lastStepDate: '2026-01-30', stepHours: 4, sla: 'warning', slaMinutesLeft: 90, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'K. Brown', createdDate: '2026-01-21' },
-                { id: '9374', client: 'Innovation Labs', type: 'Corporate', stage: 'Review', status: 'Pending', legalEntity: 'NOB', country: 'CH', riskLevel: 'Low', startDate: '2026-01-23', startedBeforeHours: 18, lastStepDate: '2026-01-29', stepHours: 10, sla: 'normal', slaMinutesLeft: 328, blocked: true, escalated: false, owner: true, assignee: 'A. Badrova', am: 'L. Garcia', createdDate: '2026-01-23' },
-                { id: '6690', client: 'Michael Brown', type: 'Individual', stage: 'Under Review', status: 'Escalation', legalEntity: 'XNT', country: 'AU', riskLevel: 'Medium', startDate: '2026-01-17', startedBeforeHours: 120, lastStepDate: '2026-01-28', stepHours: 14, sla: 'normal', slaMinutesLeft: 300, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'P. Martinez', createdDate: '2026-01-17' },
-                { id: '1439', client: 'Sarah Johnson', type: 'Individual', stage: 'Under Review', status: 'In review', legalEntity: 'EXT', country: 'CA', riskLevel: 'Low', startDate: '2026-01-15', startedBeforeHours: 144, lastStepDate: '2026-01-29', stepHours: 3, sla: 'breach', slaMinutesLeft: -200, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'T. Anderson', createdDate: '2026-01-15' },
-                { id: '5948', client: 'David Lee', type: 'Individual', stage: 'Review', status: 'Pending', legalEntity: 'NOB', country: 'JP', riskLevel: 'Medium', startDate: '2026-01-24', startedBeforeHours: 12, lastStepDate: '2026-01-30', stepHours: 1, sla: 'warning', slaMinutesLeft: 78, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'N. Thomas', createdDate: '2026-01-24' },
-                { id: '7654', client: 'Sophia Martinez', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'XNT', country: 'ES', riskLevel: 'Low', startDate: '2026-01-25', startedBeforeHours: 6, lastStepDate: '2026-01-30', stepHours: 2, sla: 'normal', slaMinutesLeft: 420, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'C. Jackson', createdDate: '2026-01-25' },
-                { id: '2109', client: 'James Wilson', type: 'Corporate', stage: 'Review', status: 'Waiting for review', legalEntity: 'EXT', country: 'NL', riskLevel: 'High', startDate: '2026-01-22', startedBeforeHours: 30, lastStepDate: '2026-01-29', stepHours: 7, sla: 'normal', slaMinutesLeft: 180, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'E. White', createdDate: '2026-01-22' },
-                { id: '3847', client: 'Emma Davis', type: 'Individual', stage: 'Under Review', status: 'Pending', legalEntity: 'NOB', country: 'IT', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 54, lastStepDate: '2026-01-30', stepHours: 5, sla: 'warning', slaMinutesLeft: 65, blocked: false, escalated: true, owner: true, assignee: 'A. Badrova', am: 'D. Harris', createdDate: '2026-01-20' },
-                { id: '5012', client: 'Oliver Chen', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'XNT', country: 'HK', riskLevel: 'Low', startDate: '2026-01-24', startedBeforeHours: 15, lastStepDate: '2026-01-30', stepHours: 3, sla: 'warning', slaMinutesLeft: 45, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'F. Clark', createdDate: '2026-01-24' },
-                { id: '9876', client: 'Isabella Rodriguez', type: 'Financial Institution', stage: 'Review', status: 'In review', legalEntity: 'EXT', country: 'MX', riskLevel: 'High', startDate: '2026-01-23', startedBeforeHours: 20, lastStepDate: '2026-01-29', stepHours: 9, sla: 'normal', slaMinutesLeft: 350, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'G. Lewis', createdDate: '2026-01-23' },
-                { id: '4321', client: 'Lucas Thompson', type: 'Corporate', stage: 'Under Review', status: 'Pending', legalEntity: 'NOB', country: 'SE', riskLevel: 'Medium', startDate: '2026-01-21', startedBeforeHours: 42, lastStepDate: '2026-01-29', stepHours: 11, sla: 'normal', slaMinutesLeft: 250, blocked: true, escalated: false, owner: true, assignee: 'A. Badrova', am: 'H. Robinson', createdDate: '2026-01-21' },
+                { id: '8861', client: 'Markus Weber', phone: '+49 172 843 291', email: 'markus.weber@outlook.de', type: 'Individual', stage: 'Review', status: 'Pending', legalEntity: 'XNT', country: 'DE', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 48, lastStepDate: '2026-01-28', stepHours: 12, sla: 'normal', slaMinutesLeft: 240, blocked: false, escalated: true, owner: true, assignee: 'A. Badrova', am: 'M. Johnson', createdDate: '2026-01-20', regClientType: 'Retail', citizenship: 'DE', potentialAum: 125000, clientStatus: 'Active', badge: null },
+                { id: '9261', client: 'Elena Kowalski', phone: '+48 502 761 438', email: 'e.kowalski@gmail.com', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'EXT', country: 'PL', riskLevel: 'Low', startDate: '2026-01-18', startedBeforeHours: 96, lastStepDate: '2026-01-30', stepHours: 2, sla: 'breach', slaMinutesLeft: -117, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'S. Williams', createdDate: '2026-01-18', regClientType: 'Retail', citizenship: 'PL', potentialAum: 50000, clientStatus: 'Active', badge: null },
+                { id: '8829', client: 'NORDVIK CAPITAL LTD', phone: '+44 20 7946 0821', email: 'compliance@nordvik.co.uk', type: 'Corporate', stage: 'Under Review', status: 'In review', legalEntity: 'NOB', country: 'GB', riskLevel: 'High', startDate: '2026-01-19', startedBeforeHours: 72, lastStepDate: '2026-01-29', stepHours: 8, sla: 'breach', slaMinutesLeft: -57, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'J. Davis', createdDate: '2026-01-19', regClientType: 'Professional', citizenship: 'GB', potentialAum: 2500000, clientStatus: 'Active', badge: null },
+                { id: '4846', client: 'Giovanni Rossi', phone: '+39 338 492 7651', email: 'g.rossi@libero.it', type: 'Individual', stage: 'Pending ONBA', status: 'Waiting for review', legalEntity: 'XNT', country: 'IT', riskLevel: 'Medium', startDate: '2026-01-22', startedBeforeHours: 24, lastStepDate: '2026-01-29', stepHours: 6, sla: 'normal', slaMinutesLeft: 228, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'R. Miller', createdDate: '2026-01-22', regClientType: 'Retail', citizenship: 'IT', potentialAum: 95000, clientStatus: 'Pending', badge: null },
+                { id: '3933', client: 'APEX TRADING AG', phone: '+41 44 582 1930', email: 'info@apextrading.ch', type: 'Corporate', stage: 'Under Review', status: 'Pending', legalEntity: 'EXT', country: 'CH', riskLevel: 'High', startDate: '2026-01-21', startedBeforeHours: 36, lastStepDate: '2026-01-30', stepHours: 4, sla: 'warning', slaMinutesLeft: 90, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'K. Brown', createdDate: '2026-01-21', regClientType: 'Institutional', citizenship: 'CH', potentialAum: 15000000, clientStatus: 'Active', badge: null },
+                { id: '9374', client: 'Andrei Petrov', phone: '+40 721 583 946', email: 'andrei.petrov@yahoo.com', type: 'Individual', stage: 'Review', status: 'Pending', legalEntity: 'NOB', country: 'RO', riskLevel: 'Low', startDate: '2026-01-23', startedBeforeHours: 18, lastStepDate: '2026-01-29', stepHours: 10, sla: 'normal', slaMinutesLeft: 328, blocked: true, escalated: false, owner: true, assignee: 'A. Badrova', am: 'L. Garcia', createdDate: '2026-01-23', regClientType: 'Retail', citizenship: 'RO', potentialAum: 75000, clientStatus: 'Active', badge: null },
+                { id: '6690', client: 'Sofia Andersson', phone: '+46 70 841 2953', email: 'sofia.andersson@telia.se', type: 'Individual', stage: 'Under Review', status: 'Escalation', legalEntity: 'XNT', country: 'SE', riskLevel: 'Medium', startDate: '2026-01-17', startedBeforeHours: 120, lastStepDate: '2026-01-28', stepHours: 14, sla: 'normal', slaMinutesLeft: 300, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'P. Martinez', createdDate: '2026-01-17', regClientType: 'Retail', citizenship: 'SE', potentialAum: 200000, clientStatus: 'Under Review', badge: null },
+                { id: '1439', client: 'Pierre Dubois', phone: '+33 6 72 48 19 35', email: 'p.dubois@orange.fr', type: 'Individual', stage: 'Under Review', status: 'In review', legalEntity: 'EXT', country: 'FR', riskLevel: 'Low', startDate: '2026-01-15', startedBeforeHours: 144, lastStepDate: '2026-01-29', stepHours: 3, sla: 'breach', slaMinutesLeft: -200, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'T. Anderson', createdDate: '2026-01-15', regClientType: 'Retail', citizenship: 'FR', potentialAum: 85000, clientStatus: 'Active', badge: null },
+                { id: '5948', client: 'Tomasz Nowak', phone: '+48 605 283 741', email: 'tomasz.nowak@wp.pl', type: 'Individual', stage: 'Review', status: 'Pending', legalEntity: 'NOB', country: 'PL', riskLevel: 'Medium', startDate: '2026-01-24', startedBeforeHours: 12, lastStepDate: '2026-01-30', stepHours: 1, sla: 'warning', slaMinutesLeft: 78, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'N. Thomas', createdDate: '2026-01-24', regClientType: 'Retail', citizenship: 'PL', potentialAum: 300000, clientStatus: 'Pending', badge: null },
+                { id: '7654', client: 'Maria Garcia', phone: '+34 612 847 293', email: 'maria.garcia@gmail.com', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'XNT', country: 'ES', riskLevel: 'Low', startDate: '2026-01-25', startedBeforeHours: 6, lastStepDate: '2026-01-30', stepHours: 2, sla: 'normal', slaMinutesLeft: 420, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'C. Jackson', createdDate: '2026-01-25', regClientType: 'Retail', citizenship: 'ES', potentialAum: 45000, clientStatus: 'Pending', badge: null },
+                { id: '2109', client: 'BALTIC VENTURES OÜ', phone: '+372 5 812 4639', email: 'office@balticventures.ee', type: 'Corporate', stage: 'Review', status: 'Waiting for review', legalEntity: 'EXT', country: 'EE', riskLevel: 'High', startDate: '2026-01-22', startedBeforeHours: 30, lastStepDate: '2026-01-29', stepHours: 7, sla: 'normal', slaMinutesLeft: 180, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'E. White', createdDate: '2026-01-22', regClientType: 'Professional', citizenship: 'EE', potentialAum: 1200000, clientStatus: 'Active', badge: null },
+                { id: '3847', client: 'Viktor Horvat', phone: '+385 91 527 8431', email: 'viktor.horvat@gmail.com', type: 'Individual', stage: 'Under Review', status: 'Pending', legalEntity: 'NOB', country: 'HR', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 54, lastStepDate: '2026-01-30', stepHours: 5, sla: 'warning', slaMinutesLeft: 65, blocked: false, escalated: true, owner: true, assignee: 'A. Badrova', am: 'D. Harris', createdDate: '2026-01-20', regClientType: 'Retail', citizenship: 'HR', potentialAum: 95000, clientStatus: 'Under Review', badge: null },
+                { id: '5012', client: 'Jan Muller', phone: '+31 6 28 47 19 35', email: 'jan.muller@ziggo.nl', type: 'Individual', stage: 'Pending ONBA', status: 'Pending', legalEntity: 'XNT', country: 'NL', riskLevel: 'Low', startDate: '2026-01-24', startedBeforeHours: 15, lastStepDate: '2026-01-30', stepHours: 3, sla: 'warning', slaMinutesLeft: 45, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'F. Clark', createdDate: '2026-01-24', regClientType: 'Retail', citizenship: 'NL', potentialAum: 180000, clientStatus: 'Pending', badge: null },
+                { id: '9876', client: 'MERIDIAN FINANCE SA', phone: '+352 26 48 19 00', email: 'contact@meridianfin.lu', type: 'Financial Institution', stage: 'Review', status: 'In review', legalEntity: 'EXT', country: 'LU', riskLevel: 'High', startDate: '2026-01-23', startedBeforeHours: 20, lastStepDate: '2026-01-29', stepHours: 9, sla: 'normal', slaMinutesLeft: 350, blocked: false, escalated: false, owner: true, assignee: 'A. Badrova', am: 'G. Lewis', createdDate: '2026-01-23', regClientType: 'Institutional', citizenship: 'LU', potentialAum: 8500000, clientStatus: 'Active', badge: null },
+                { id: '4321', client: 'Katarina Svoboda', phone: '+420 608 741 293', email: 'k.svoboda@seznam.cz', type: 'Individual', stage: 'Under Review', status: 'Pending', legalEntity: 'NOB', country: 'CZ', riskLevel: 'Medium', startDate: '2026-01-21', startedBeforeHours: 42, lastStepDate: '2026-01-29', stepHours: 11, sla: 'normal', slaMinutesLeft: 250, blocked: true, escalated: false, owner: true, assignee: 'A. Badrova', am: 'H. Robinson', createdDate: '2026-01-21', regClientType: 'Retail', citizenship: 'CZ', potentialAum: 62000, clientStatus: 'Active', badge: null },
             ],
             unassigned: [
-                { id: '5028', client: 'Emily Wilson', type: 'Individual', status: 'Escalation', legalEntity: 'XNT', country: 'NO', riskLevel: 'Low', startDate: '2026-01-19', startedBeforeHours: 80, lastStepDate: '2026-01-28', stepHours: 15, sla: 'normal', slaMinutesLeft: 360, owner: false, am: 'M. Johnson', createdDate: '2026-01-19' },
-                { id: '4600', client: 'Robert Taylor', type: 'Corporate', status: 'Pending', legalEntity: 'EXT', country: 'BE', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 60, lastStepDate: '2026-01-29', stepHours: 8, sla: 'normal', slaMinutesLeft: 330, owner: false, am: 'S. Williams', createdDate: '2026-01-20' },
-                { id: '7123', client: 'Lisa Anderson', type: 'Individual', status: 'Pending', legalEntity: 'NOB', country: 'DK', riskLevel: 'Low', startDate: '2026-01-22', startedBeforeHours: 40, lastStepDate: '2026-01-30', stepHours: 4, sla: 'normal', slaMinutesLeft: 240, owner: false, am: 'J. Davis', createdDate: '2026-01-22' },
+                { id: '5028', client: 'Henrik Larsen', phone: '+47 412 583 692', email: 'h.larsen@online.no', type: 'Individual', status: 'Escalation', legalEntity: 'XNT', country: 'NO', riskLevel: 'Low', startDate: '2026-01-19', startedBeforeHours: 80, lastStepDate: '2026-01-28', stepHours: 15, sla: 'normal', slaMinutesLeft: 360, owner: false, am: 'M. Johnson', createdDate: '2026-01-19', badge: null },
+                { id: '4600', client: 'BRUSSELS INVEST NV', phone: '+32 2 548 1920', email: 'info@brusselsinvest.be', type: 'Corporate', status: 'Pending', legalEntity: 'EXT', country: 'BE', riskLevel: 'Medium', startDate: '2026-01-20', startedBeforeHours: 60, lastStepDate: '2026-01-29', stepHours: 8, sla: 'normal', slaMinutesLeft: 330, owner: false, am: 'S. Williams', createdDate: '2026-01-20', badge: null },
+                { id: '7123', client: 'Lars Nielsen', phone: '+45 20 48 71 93', email: 'lars.nielsen@gmail.com', type: 'Individual', status: 'Pending', legalEntity: 'NOB', country: 'DK', riskLevel: 'Low', startDate: '2026-01-22', startedBeforeHours: 40, lastStepDate: '2026-01-30', stepHours: 4, sla: 'normal', slaMinutesLeft: 240, owner: false, am: 'J. Davis', createdDate: '2026-01-22', badge: null },
+                { id: '8234', client: 'Anna Kowalczyk', phone: '+48 691 483 725', email: 'a.kowalczyk@interia.pl', type: 'Individual', status: 'Pending', legalEntity: 'XNT', country: 'PL', riskLevel: 'Medium', startDate: '2026-01-23', startedBeforeHours: 35, lastStepDate: '2026-01-30', stepHours: 6, sla: 'normal', slaMinutesLeft: 280, owner: false, am: 'L. Garcia', createdDate: '2026-01-23', badge: null },
+                { id: '9517', client: 'ADRIATIC HOLDINGS DOO', phone: '+381 11 382 4950', email: 'office@adriatichld.rs', type: 'Corporate', status: 'Waiting for review', legalEntity: 'NOB', country: 'RS', riskLevel: 'High', startDate: '2026-01-21', startedBeforeHours: 52, lastStepDate: '2026-01-29', stepHours: 10, sla: 'normal', slaMinutesLeft: 180, owner: false, am: 'K. Brown', createdDate: '2026-01-21', badge: null },
+                { id: '3829', client: 'Martin Schmidt', phone: '+43 664 582 1937', email: 'm.schmidt@aon.at', type: 'Individual', status: 'Pending', legalEntity: 'EXT', country: 'AT', riskLevel: 'Low', startDate: '2026-01-24', startedBeforeHours: 28, lastStepDate: '2026-01-30', stepHours: 5, sla: 'normal', slaMinutesLeft: 320, owner: false, am: 'R. Miller', createdDate: '2026-01-24', badge: null },
+                { id: '6542', client: 'Isabela Costa', phone: '+351 912 847 392', email: 'isabela.costa@sapo.pt', type: 'Individual', status: 'In review', legalEntity: 'XNT', country: 'PT', riskLevel: 'Medium', startDate: '2026-01-22', startedBeforeHours: 44, lastStepDate: '2026-01-30', stepHours: 3, sla: 'normal', slaMinutesLeft: 260, owner: false, am: 'T. Anderson', createdDate: '2026-01-22', badge: null },
+                { id: '1893', client: 'Dimitri Papadopoulos', phone: '+30 694 528 1473', email: 'd.papadopoulos@gmail.com', type: 'Individual', status: 'Pending', legalEntity: 'NOB', country: 'GR', riskLevel: 'Low', startDate: '2026-01-25', startedBeforeHours: 20, lastStepDate: '2026-01-30', stepHours: 2, sla: 'normal', slaMinutesLeft: 380, owner: false, am: 'N. Thomas', createdDate: '2026-01-25', badge: null },
+                { id: '7458', client: 'BALTIC PARTNERS SIA', phone: '+371 2 748 1925', email: 'info@balticpartners.lv', type: 'Corporate', status: 'Escalation', legalEntity: 'EXT', country: 'LV', riskLevel: 'High', startDate: '2026-01-20', startedBeforeHours: 64, lastStepDate: '2026-01-28', stepHours: 12, sla: 'normal', slaMinutesLeft: 150, owner: false, am: 'P. Martinez', createdDate: '2026-01-20', badge: null },
+                { id: '2736', client: 'Lukas Novak', phone: '+421 905 482 736', email: 'lukas.novak@azet.sk', type: 'Individual', status: 'Waiting for review', legalEntity: 'XNT', country: 'SK', riskLevel: 'Medium', startDate: '2026-01-23', startedBeforeHours: 38, lastStepDate: '2026-01-29', stepHours: 8, sla: 'normal', slaMinutesLeft: 220, owner: false, am: 'C. Jackson', createdDate: '2026-01-23', badge: null },
+                { id: '4915', client: 'Nina Jovanovic', phone: '+385 98 471 2839', email: 'nina.jovanovic@t.ht.hr', type: 'Individual', status: 'Pending', legalEntity: 'NOB', country: 'HR', riskLevel: 'Low', startDate: '2026-01-24', startedBeforeHours: 32, lastStepDate: '2026-01-30', stepHours: 4, sla: 'normal', slaMinutesLeft: 310, owner: false, am: 'D. Harris', createdDate: '2026-01-24', badge: null },
+                { id: '8126', client: 'DANUBE CAPITAL KFT', phone: '+36 1 482 9150', email: 'contact@danubecap.hu', type: 'Corporate', status: 'Pending', legalEntity: 'EXT', country: 'HU', riskLevel: 'High', startDate: '2026-01-21', startedBeforeHours: 48, lastStepDate: '2026-01-29', stepHours: 9, sla: 'normal', slaMinutesLeft: 190, owner: false, am: 'F. Clark', createdDate: '2026-01-21', badge: null },
+                { id: '5673', client: 'Aleksandra Ivanova', phone: '+359 887 294 638', email: 'a.ivanova@abv.bg', type: 'Individual', status: 'In review', legalEntity: 'XNT', country: 'BG', riskLevel: 'Medium', startDate: '2026-01-22', startedBeforeHours: 42, lastStepDate: '2026-01-29', stepHours: 7, sla: 'normal', slaMinutesLeft: 240, owner: false, am: 'G. Lewis', createdDate: '2026-01-22', badge: null },
+                { id: '9284', client: 'Marius Popescu', phone: '+40 732 594 812', email: 'marius.popescu@yahoo.ro', type: 'Individual', status: 'Waiting for review', legalEntity: 'NOB', country: 'RO', riskLevel: 'Low', startDate: '2026-01-25', startedBeforeHours: 24, lastStepDate: '2026-01-30', stepHours: 3, sla: 'normal', slaMinutesLeft: 350, owner: false, am: 'H. Robinson', createdDate: '2026-01-25', badge: null },
+                { id: '3457', client: 'NORDEA INVESTMENTS AS', phone: '+47 22 48 59 30', email: 'info@nordeainv.no', type: 'Corporate', status: 'Escalation', legalEntity: 'EXT', country: 'NO', riskLevel: 'High', startDate: '2026-01-20', startedBeforeHours: 68, lastStepDate: '2026-01-28', stepHours: 14, sla: 'normal', slaMinutesLeft: 120, owner: false, am: 'M. Johnson', createdDate: '2026-01-20', badge: null },
             ]
         };
 
@@ -2654,9 +2714,37 @@
             kpiFilter: null
         };
 
+        // Column configuration - defines all available columns
+        const defaultColumnConfig = [
+            { id: 'info', label: 'INFO', field: 'info', visible: true, sortable: true },
+            { id: 'type', label: 'CORP/INDIVIDUAL', field: 'type', visible: true, sortable: true },
+            { id: 'status', label: 'ONBOARDING STATE', field: 'status', visible: true, sortable: true },
+            { id: 'legalEntity', label: 'LEGAL ENTITY', field: 'legalEntity', visible: true, sortable: true },
+            { id: 'country', label: 'RESIDENCE', field: 'country', visible: true, sortable: true },
+            { id: 'jurisdiction', label: 'JURISDICTION', field: 'jurisdiction', visible: true, sortable: true },
+            { id: 'riskLevel', label: 'RISK LEVEL', field: 'riskLevel', visible: true, sortable: true },
+            { id: 'startDate', label: 'ONB START DATE', field: 'startDate', visible: true, sortable: true },
+            { id: 'startedBeforeHours', label: 'ONB STARTED, HRS', field: 'startedBeforeHours', visible: true, sortable: true },
+            { id: 'lastStepDate', label: 'LAST STEP DATE', field: 'lastStepDate', visible: true, sortable: true },
+            { id: 'stepHours', label: 'LAST STEP, HRS', field: 'stepHours', visible: true, sortable: true },
+            // Hidden columns (can be added by user)
+            { id: 'assignee', label: 'ASSIGNED TO', field: 'assignee', visible: false, sortable: true },
+            { id: 'regClientType', label: 'REGISTRATION CLIENT TYPE', field: 'regClientType', visible: false, sortable: true },
+            { id: 'citizenship', label: 'COUNTRY OF CITIZENSHIP', field: 'citizenship', visible: false, sortable: true },
+            { id: 'potentialAum', label: 'POTENTIAL AUM', field: 'potentialAum', visible: false, sortable: true },
+            { id: 'clientStatus', label: 'STATUS', field: 'clientStatus', visible: false, sortable: true }
+        ];
+
+        // Current column configuration (will be modified by user)
+        let columnConfig = JSON.parse(JSON.stringify(defaultColumnConfig));
+
         // Pagination state
         let currentPage = 1;
-        const rowsPerPage = 13;
+        let rowsPerPage = 13;
+
+        // Unassigned pagination state
+        let unassignedCurrentPage = 1;
+        let unassignedRowsPerPage = 7;
 
         // Sort state
         let sortColumn = null;
@@ -2761,18 +2849,9 @@
                 sortDirection = 'asc';
             }
 
-            // Update header classes
-            document.querySelectorAll('th.sortable').forEach(th => {
-                th.classList.remove('sorted-asc', 'sorted-desc');
-            });
-
-            const activeHeader = document.querySelector(`th.sortable[onclick="sortTable('${column}')"]`);
-            if (activeHeader) {
-                activeHeader.classList.add(sortDirection === 'asc' ? 'sorted-asc' : 'sorted-desc');
-            }
-
             // Reset to first page when sorting
             currentPage = 1;
+            renderTableHeaders();
             renderWorkQueue();
         }
 
@@ -2813,14 +2892,185 @@
             return sorted;
         }
 
+        // ============================================================================
+        // COLUMN SETTINGS FUNCTIONS
+        // ============================================================================
+        let draggedColumnIndex = null;
+
+        function toggleColumnSettings() {
+            const dropdown = document.getElementById('column-settings-dropdown');
+            dropdown.classList.toggle('open');
+            if (dropdown.classList.contains('open')) {
+                renderColumnSettingsList();
+                // Close dropdown when clicking outside
+                setTimeout(() => {
+                    document.addEventListener('click', closeColumnSettingsOnClickOutside);
+                }, 0);
+            } else {
+                document.removeEventListener('click', closeColumnSettingsOnClickOutside);
+            }
+        }
+
+        function closeColumnSettingsOnClickOutside(e) {
+            const dropdown = document.getElementById('column-settings-dropdown');
+            const btn = document.querySelector('.column-settings-btn');
+            if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+                dropdown.classList.remove('open');
+                document.removeEventListener('click', closeColumnSettingsOnClickOutside);
+            }
+        }
+
+        function renderColumnSettingsList() {
+            const list = document.getElementById('column-settings-list');
+            list.innerHTML = columnConfig.map((col, index) => `
+                <div class="column-settings-item" draggable="true" data-index="${index}"
+                     ondragstart="handleColumnDragStart(event, ${index})"
+                     ondragover="handleColumnDragOver(event, ${index})"
+                     ondragleave="handleColumnDragLeave(event)"
+                     ondrop="handleColumnDrop(event, ${index})"
+                     ondragend="handleColumnDragEnd(event)">
+                    <span class="column-drag-handle">⋮⋮</span>
+                    <input type="checkbox" class="column-checkbox"
+                           ${col.visible ? 'checked' : ''}
+                           onchange="toggleColumn(${index})" />
+                    <span class="column-label">${col.label}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleColumn(index) {
+            columnConfig[index].visible = !columnConfig[index].visible;
+            renderTableHeaders();
+            renderWorkQueue();
+        }
+
+        function resetColumns() {
+            columnConfig = JSON.parse(JSON.stringify(defaultColumnConfig));
+            renderColumnSettingsList();
+            renderTableHeaders();
+            renderWorkQueue();
+        }
+
+        function handleColumnDragStart(e, index) {
+            draggedColumnIndex = index;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleColumnDragOver(e, index) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (index !== draggedColumnIndex) {
+                e.target.closest('.column-settings-item').classList.add('drag-over');
+            }
+        }
+
+        function handleColumnDragLeave(e) {
+            e.target.closest('.column-settings-item')?.classList.remove('drag-over');
+        }
+
+        function handleColumnDrop(e, targetIndex) {
+            e.preventDefault();
+            e.target.closest('.column-settings-item')?.classList.remove('drag-over');
+
+            if (draggedColumnIndex !== null && draggedColumnIndex !== targetIndex) {
+                // Reorder columns
+                const draggedCol = columnConfig.splice(draggedColumnIndex, 1)[0];
+                columnConfig.splice(targetIndex, 0, draggedCol);
+
+                renderColumnSettingsList();
+                renderTableHeaders();
+                renderWorkQueue();
+            }
+        }
+
+        function handleColumnDragEnd(e) {
+            e.target.classList.remove('dragging');
+            draggedColumnIndex = null;
+            document.querySelectorAll('.column-settings-item').forEach(item => {
+                item.classList.remove('drag-over');
+            });
+        }
+
+        function renderTableHeaders() {
+            const thead = document.getElementById('work-queue-thead');
+            const visibleCols = columnConfig.filter(col => col.visible);
+
+            thead.innerHTML = `<tr>${visibleCols.map(col => {
+                if (col.sortable) {
+                    let sortClass = 'sortable';
+                    if (sortColumn === col.field) {
+                        sortClass += sortDirection === 'asc' ? ' sorted-asc' : ' sorted-desc';
+                    }
+                    return `<th class="${sortClass}" onclick="sortTable('${col.field}')">${col.label}</th>`;
+                } else {
+                    return `<th>${col.label}</th>`;
+                }
+            }).join('')}</tr>`;
+        }
+
+        // Country code to flag emoji mapping
+        function getCountryFlag(countryCode) {
+            const flags = {
+                'DE': '🇩🇪', 'PL': '🇵🇱', 'GB': '🇬🇧', 'IT': '🇮🇹', 'CH': '🇨🇭', 'RO': '🇷🇴',
+                'SE': '🇸🇪', 'FR': '🇫🇷', 'ES': '🇪🇸', 'EE': '🇪🇪', 'HR': '🇭🇷', 'NL': '🇳🇱',
+                'LU': '🇱🇺', 'CZ': '🇨🇿', 'US': '🇺🇸', 'CA': '🇨🇦', 'AU': '🇦🇺', 'JP': '🇯🇵',
+                'SG': '🇸🇬', 'HK': '🇭🇰', 'MX': '🇲🇽', 'BE': '🇧🇪', 'DK': '🇩🇰', 'NO': '🇳🇴',
+                'SK': '🇸🇰', 'AT': '🇦🇹', 'PT': '🇵🇹', 'HU': '🇭🇺', 'BG': '🇧🇬', 'GR': '🇬🇷'
+            };
+            return flags[countryCode] || '🏳️';
+        }
+
+        function getCellValue(caseData, col) {
+            const value = caseData[col.field];
+
+            switch (col.id) {
+                case 'info':
+                    const badgeHtml = caseData.badge ? `<span class="info-badge">${caseData.badge}</span>` : '';
+                    const flag = getCountryFlag(caseData.country);
+                    return `
+                        <div class="info-cell">
+                            <div class="info-name">${caseData.client || ''}${badgeHtml}</div>
+                            <div class="info-phone">${flag} ${caseData.phone || ''}</div>
+                            <div class="info-email"><a href="mailto:${caseData.email || ''}">${caseData.email || ''}</a></div>
+                        </div>
+                    `;
+                case 'id':
+                    return `<span class="app-id">${value || ''}</span>`;
+                case 'status':
+                    const statusClass = getStatusColor(value);
+                    return `<span class="status-chip ${statusClass}">${value || ''}</span>`;
+                case 'riskLevel':
+                    const color = value === 'High' ? '#D32F2F' : value === 'Medium' ? '#F57C00' : '#2E7D32';
+                    return `<span style="color: ${color}; font-weight: 500;">${value || ''}</span>`;
+                case 'stepHours':
+                    return `<span style="color: #000;">${value || ''}</span>`;
+                case 'potentialAum':
+                    return value ? '$' + Number(value).toLocaleString() : '-';
+                case 'country':
+                    // Show value only for Individual type
+                    return caseData.type === 'Individual' ? (value || '') : '';
+                case 'jurisdiction':
+                    // Show value only for Corporate/Financial Institution types
+                    return (caseData.type === 'Corporate' || caseData.type === 'Financial Institution') ? (caseData.country || '') : '';
+                case 'assignee':
+                case 'regClientType':
+                case 'citizenship':
+                case 'clientStatus':
+                    return value || '-';
+                default:
+                    return value || '';
+            }
+        }
+
         function renderWorkQueue() {
             let filteredCases = allCases.assigned.filter(matchesFilters);
             const tbody = document.querySelector('#work-queue-table-body tbody');
             const container = document.querySelector('.table-container');
+            const visibleCols = columnConfig.filter(col => col.visible);
 
             if (filteredCases.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; padding: 32px; color: #999;">No cases found</td></tr>';
-                container.classList.remove('scrollable');
+                tbody.innerHTML = `<tr><td colspan="${visibleCols.length}" style="text-align: center; padding: 32px; color: #999;">No cases found</td></tr>`;
                 updatePaginationControls(0, 0);
                 return;
             }
@@ -2842,7 +3092,6 @@
 
             tbody.innerHTML = paginatedCases.map(c => {
                 const slaClass = getSLAClass(c.slaMinutesLeft);
-                const statusClass = getStatusColor(c.status);
                 let stepHoursCellBg = '';
                 if (c.stepHours > 10) {
                     stepHoursCellBg = 'background-color: #FFEBEE;';
@@ -2850,34 +3099,34 @@
                     stepHoursCellBg = 'background-color: #FFF3E0;';
                 }
 
-                return `
-                    <tr class="${slaClass}">
-                        <td style="padding: 12px 16px;"><span class="app-id">${c.id}</span></td>
-                        <td style="padding: 12px 16px;">${c.type}</td>
-                        <td style="padding: 12px 16px;"><span class="status-chip ${statusClass}">${c.status}</span></td>
-                        <td style="padding: 12px 16px;">${c.legalEntity}</td>
-                        <td style="padding: 12px 16px;">${c.country}</td>
-                        <td style="padding: 12px 16px;"><span style="color: ${c.riskLevel === 'High' ? '#D32F2F' : c.riskLevel === 'Medium' ? '#F57C00' : '#2E7D32'}; font-weight: 500;">${c.riskLevel}</span></td>
-                        <td style="padding: 12px 16px;">${c.startDate}</td>
-                        <td style="padding: 12px 16px;">${c.startedBeforeHours}</td>
-                        <td style="padding: 12px 16px;">${c.lastStepDate}</td>
-                        <td style="padding: 12px 16px; ${stepHoursCellBg}"><span style="color: #000;">${c.stepHours}</span></td>
-                    </tr>
+                const cells = visibleCols.map(col => {
+                    const cellStyle = col.id === 'stepHours' ? stepHoursCellBg : '';
+                    return `<td style="padding: 12px 16px; ${cellStyle}">${getCellValue(c, col)}</td>`;
+                }).join('');
+
+                return `<tr class="${slaClass}">${cells}</tr>
                 `;
             }).join('');
 
-            container.classList.add('scrollable');
             updatePaginationControls(currentPage, totalPages, paginatedCases.length, filteredCases.length);
         }
 
         function updatePaginationControls(page, totalPages, rowsShowing, totalRows) {
-            document.getElementById('current-page').textContent = page;
-            document.getElementById('total-pages').textContent = totalPages;
-            document.getElementById('rows-showing').textContent = rowsShowing;
-            document.getElementById('total-rows').textContent = totalRows;
-
             document.getElementById('prev-btn').disabled = page <= 1;
             document.getElementById('next-btn').disabled = page >= totalPages;
+            document.getElementById('goto-page').value = page;
+            document.getElementById('goto-page').max = totalPages || 1;
+
+            // Render page number buttons
+            const container = document.getElementById('pagination-numbers');
+            let html = `<button class="pagination-nav-btn" onclick="previousPage()" id="prev-btn" ${page <= 1 ? 'disabled' : ''}>&lt;</button>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="pagination-page-btn ${i === page ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+
+            html += `<button class="pagination-nav-btn" onclick="nextPage()" id="next-btn" ${page >= totalPages ? 'disabled' : ''}>&gt;</button>`;
+            container.innerHTML = html;
         }
 
         function nextPage() {
@@ -2896,6 +3145,22 @@
             }
         }
 
+        function goToPage(page) {
+            const filteredCases = allCases.assigned.filter(matchesFilters);
+            const totalPages = Math.ceil(filteredCases.length / rowsPerPage);
+            const pageNum = parseInt(page);
+            if (pageNum >= 1 && pageNum <= totalPages) {
+                currentPage = pageNum;
+                renderWorkQueue();
+            }
+        }
+
+        function changeRowsPerPage(value) {
+            rowsPerPage = parseInt(value);
+            currentPage = 1;
+            renderWorkQueue();
+        }
+
         function renderUnassigned() {
             const filtered = allCases.unassigned.filter(matchesFilters);
             const tbody = document.querySelector('#unassigned-table-body tbody');
@@ -2904,15 +3169,33 @@
             if (filtered.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 32px; color: #999;">No unassigned cases</td></tr>';
                 document.getElementById('unassigned-count').textContent = '0';
-                if (unassignedContainer) unassignedContainer.classList.remove('scrollable');
+                updateUnassignedPaginationControls(1, 1);
                 return;
             }
 
-            tbody.innerHTML = filtered.map(c => {
+            // Calculate pagination
+            const totalPages = Math.ceil(filtered.length / unassignedRowsPerPage);
+            if (unassignedCurrentPage > totalPages) {
+                unassignedCurrentPage = totalPages || 1;
+            }
+
+            const startIndex = (unassignedCurrentPage - 1) * unassignedRowsPerPage;
+            const endIndex = startIndex + unassignedRowsPerPage;
+            const paginatedCases = filtered.slice(startIndex, endIndex);
+
+            tbody.innerHTML = paginatedCases.map(c => {
                 const statusClass = getStatusColor(c.status);
+                const flag = getCountryFlag(c.country);
+                const badgeHtml = c.badge ? `<span class="info-badge">${c.badge}</span>` : '';
                 return `
                     <tr class="sla-normal">
-                        <td style="padding: 12px 16px;"><span class="app-id">${c.id}</span></td>
+                        <td style="padding: 12px 16px;">
+                            <div class="info-cell">
+                                <div class="info-name">${c.client || ''}${badgeHtml}</div>
+                                <div class="info-phone">${flag} ${c.phone || ''}</div>
+                                <div class="info-email"><a href="mailto:${c.email || ''}">${c.email || ''}</a></div>
+                            </div>
+                        </td>
                         <td style="padding: 12px 16px;">${c.type}</td>
                         <td style="padding: 12px 16px;"><span class="status-chip ${statusClass}">${c.status}</span></td>
                         <td style="padding: 12px 16px;">${c.legalEntity}</td>
@@ -2925,14 +3208,57 @@
                 `;
             }).join('');
 
-            // Apply scrollable class for unassigned table only when needed
-            if (filtered.length > 4) {
-                if (unassignedContainer) unassignedContainer.classList.add('scrollable');
-            } else {
-                if (unassignedContainer) unassignedContainer.classList.remove('scrollable');
+            document.getElementById('unassigned-count').textContent = filtered.length;
+            updateUnassignedPaginationControls(unassignedCurrentPage, totalPages);
+        }
+
+        function updateUnassignedPaginationControls(page, totalPages) {
+            const container = document.getElementById('unassigned-pagination-numbers');
+            if (!container) return;
+
+            document.getElementById('unassigned-goto-page').value = page;
+            document.getElementById('unassigned-goto-page').max = totalPages || 1;
+
+            let html = `<button class="pagination-nav-btn" onclick="previousUnassignedPage()" id="unassigned-prev-btn" ${page <= 1 ? 'disabled' : ''}>&lt;</button>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="pagination-page-btn ${i === page ? 'active' : ''}" onclick="goToUnassignedPage(${i})">${i}</button>`;
             }
 
-            document.getElementById('unassigned-count').textContent = filtered.length;
+            html += `<button class="pagination-nav-btn" onclick="nextUnassignedPage()" id="unassigned-next-btn" ${page >= totalPages ? 'disabled' : ''}>&gt;</button>`;
+            container.innerHTML = html;
+        }
+
+        function nextUnassignedPage() {
+            const filtered = allCases.unassigned.filter(matchesFilters);
+            const totalPages = Math.ceil(filtered.length / unassignedRowsPerPage);
+            if (unassignedCurrentPage < totalPages) {
+                unassignedCurrentPage++;
+                renderUnassigned();
+            }
+        }
+
+        function previousUnassignedPage() {
+            if (unassignedCurrentPage > 1) {
+                unassignedCurrentPage--;
+                renderUnassigned();
+            }
+        }
+
+        function goToUnassignedPage(page) {
+            const filtered = allCases.unassigned.filter(matchesFilters);
+            const totalPages = Math.ceil(filtered.length / unassignedRowsPerPage);
+            const pageNum = parseInt(page);
+            if (pageNum >= 1 && pageNum <= totalPages) {
+                unassignedCurrentPage = pageNum;
+                renderUnassigned();
+            }
+        }
+
+        function changeUnassignedRowsPerPage(value) {
+            unassignedRowsPerPage = parseInt(value);
+            unassignedCurrentPage = 1;
+            renderUnassigned();
         }
 
         function renderSLATimer() {
@@ -3164,6 +3490,7 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderTableHeaders();
             renderWorkQueue();
             renderUnassigned();
             renderRecentUpdates();
